@@ -9,11 +9,15 @@ RSpec.describe "users controller", type: :request do
     end
 
     it 'should retun success response' do
-      user = create(:user)
+      user = create(:user, frst_name: 'qoli', last_name: 'qolizadeh',
+      email: 'qoli@gmail.com')
       sign_in(user)
       get '/users'
-      expect(json['data']).to eql(true)
-
+      expect(json['data'].size).to eql(1)
+      expect(json['data'][0]['id'].to_i).to eql(user.id)
+      expect(json['data'][0]['attributes']['frst_name']).to eql('qoli')
+      expect(json['data'][0]['attributes']['last_name']).to eql('qolizadeh')
+      expect(json['data'][0]['attributes']['email']).to eql('qoli@gmail.com')
      end
   end
 end
