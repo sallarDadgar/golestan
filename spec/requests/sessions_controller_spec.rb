@@ -4,8 +4,8 @@ RSpec.describe "sessions controller", type: :request do
   context '.create' do
     it 'should retun failed response' do
       post '/users/sign_in', params: {}
-      expect(json['success']).to eql(false)
-      expect(json['errors']).to eql(['Login failed.'])
+      expect(json['messages']).to eql('you are not logged in!')
+      # expect(json['errors']).to eql(['Login failed.'])
 
     end
 
