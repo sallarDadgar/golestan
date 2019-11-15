@@ -1,0 +1,25 @@
+
+default: &default
+  adapter: postgresql
+  host: localhost
+  username: postgres
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: golestan2_development
+
+
+test:
+  <<: *default
+  database: golestan2_test
+
+
+production:
+  <<: *default
+  database: golestan2_production
+  username: golestan2
+  password: <%= ENV['GOLESTAN2_DATABASE_PASSWORD'] %>
