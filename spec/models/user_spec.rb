@@ -32,14 +32,47 @@ RSpec.describe User, type: :model do
   end
 
 
-  describe 'validations' do
-    context 'first name' do
-      it 'should validate first name' do
-        user = create(:user)
-        user.frst_name = ''
-        expect(user.valid?).to eql(false)
-        expect(user.errors.messages[:frst_name]).to eql(["can't be blank"])
-      end
+  context 'validations' do
+    it 'should validate first name' do
+      user = create(:user)
+      user.frst_name = ''
+      expect(user.valid?).to eql(false)
+      expect(user.errors.messages[:frst_name]).to eql(["can't be blank"])
+    end
+
+    it 'should validate last name' do
+      user = create(:user)
+      user.last_name = ''
+      expect(user.valid?).to eql(false)
+      expect(user.errors.messages[:last_name]).to eql(["can't be blank"])
+    end
+
+    it 'should validate email' do
+      user = create(:user)
+      user.email = ''
+      expect(user.valid?).to eql(false)
+      expect(user.errors.messages[:email]).to eql(["can't be blank"])
+    end
+
+    it 'should validate profile' do
+      user = create(:user)
+      user.profile = ''
+      expect(user.valid?).to eql(false)
+      expect(user.errors.messages[:profile]).to eql(["can't be blank"])
+    end
+
+    it 'should validate code' do
+      user = create(:user)
+      user.code = ''
+      expect(user.valid?).to eql(false)
+      expect(user.errors.messages[:code]).to eql(["can't be blank"])
+    end
+
+    it 'should validate role' do
+      user = create(:user)
+      user.role = nil
+      expect(user.valid?).to eql(false)
+      expect(user.errors.messages[:role]).to eql(["can't be blank"])
     end
   end
 end
