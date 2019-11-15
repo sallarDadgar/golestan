@@ -15,11 +15,11 @@
 
 FactoryGirl.define do
   factory :user do
-    frst_name "MyString"
-    last_name "MyString"
+    frst_name { FFaker::Name.first_name }
+    last_name { FFaker::Name.last_name }
     email "MyString"
     code "MyString"
-    role 1
+    role { %i(admin prof student).sample}
     profile "MyString"
   end
 end

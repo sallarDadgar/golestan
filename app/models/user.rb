@@ -16,5 +16,18 @@
 #
 
 class User < ApplicationRecord
-  enum role: %i[admin prof student]
+  enum role: %i(admin prof student)
+
+  validates :frst_name, presence: true
+	# validates :last_name, presence: true
+	# validates :image, presence: true
+	# validates :role, presence: true
+  # validates :email, uniqueness: true
+
+
+	# validates :code, presence: true
+
+  def full_name
+		"#{frst_name} #{last_name}"
+	end
 end
