@@ -10,7 +10,8 @@ RSpec.describe "sessions controller", type: :request do
     end
 
     it 'should retun success response' do
-      create(:user, email: 'qoli@gmail.com', password: 'ARELSADA')
+      admin = create(:admin)
+      create(:user, email: 'qoli@gmail.com', password: 'ARELSADA', fkey: admin)
       post '/users/sign_in', params: {
         user: {
           email: 'qoli@gmail.com',

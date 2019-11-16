@@ -10,6 +10,10 @@
 #
 
 class Student < ApplicationRecord
+  has_one :user, as: :fkey
+
   validates :birthPlace, presence: true
   validates :rank, presence: true
+
+  accepts_nested_attributes_for :user
 end

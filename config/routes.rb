@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     # , defaults: { format: 'json' }
   # resources :lessons
   # resources :majors
-  # resources :admins
-  # resources :students
-  # resources :profs
+  resources :admins
+  resources :students
+  resources :profs
 end

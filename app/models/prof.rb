@@ -10,6 +10,9 @@
 #
 
 class Prof < ApplicationRecord
+  has_one :user, as: :fkey
   validates :college, presence: true
   validates :experience, presence: true
+
+  accepts_nested_attributes_for :user
 end

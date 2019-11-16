@@ -6,6 +6,7 @@
 #  code                   :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  fkey_type              :string           not null
 #  frst_name              :string
 #  last_name              :string
 #  profile                :string
@@ -15,11 +16,13 @@
 #  role                   :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  fkey_id                :bigint           not null
 #
 # Indexes
 #
-#  index_users_on_email                 (email) UNIQUE
-#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_email                  (email) UNIQUE
+#  index_users_on_fkey_type_and_fkey_id  (fkey_type,fkey_id)
+#  index_users_on_reset_password_token   (reset_password_token) UNIQUE
 #
 
 FactoryGirl.define do

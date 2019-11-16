@@ -12,5 +12,19 @@
 require 'rails_helper'
 
 RSpec.describe Prof, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'validations' do
+    it "should return error when college not provided" do
+      prof = create(:prof)
+      prof.college = ''
+      expect(prof).not_to be_valid
+      expect(prof.errors.messages[:college]).to eql(["can't be blank"])
+    end
+
+    it "should return error when nationality not provided" do
+      prof = create(:prof)
+      prof.experience = ''
+      expect(prof).not_to be_valid
+      expect(prof.errors.messages[:experience]).to eql(["can't be blank"])
+    end
+  end
 end

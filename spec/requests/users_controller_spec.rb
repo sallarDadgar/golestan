@@ -9,8 +9,9 @@ RSpec.describe "users controller", type: :request do
     end
 
     it 'should retun success response' do
+      admin = create(:admin)
       user = create(:user, role: :admin, frst_name: 'qoli', last_name: 'qolizadeh',
-      email: 'qoli@gmail.com')
+      email: 'qoli@gmail.com', fkey: admin)
       sign_in(user)
       get '/users'
       expect(json['data'].size).to eql(1)

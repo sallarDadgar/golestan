@@ -12,5 +12,19 @@
 require 'rails_helper'
 
 RSpec.describe Student, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'validations' do
+    it "should return error when birth place not provided" do
+      stud = create(:student)
+      stud.birthPlace = ''
+      expect(stud).not_to be_valid
+      expect(stud.errors.messages[:birthPlace]).to eql(["can't be blank"])
+    end
+
+    it "should return error when nationality not provided" do
+      stud = create(:student)
+      stud.rank = ''
+      expect(stud).not_to be_valid
+      expect(stud.errors.messages[:rank]).to eql(["can't be blank"])
+    end
+  end
 end

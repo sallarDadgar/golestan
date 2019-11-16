@@ -10,6 +10,10 @@
 #
 
 class Admin < ApplicationRecord
+  include Fkey
+  has_one :user, as: :fkey
   validates :age, presence: true
   validates :nationality, presence: true
+
+  accepts_nested_attributes_for :user
 end
