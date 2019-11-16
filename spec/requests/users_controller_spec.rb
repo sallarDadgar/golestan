@@ -9,7 +9,7 @@ RSpec.describe "users controller", type: :request do
     end
 
     it 'should retun success response' do
-      user = create(:user, frst_name: 'qoli', last_name: 'qolizadeh',
+      user = create(:user, role: :admin, frst_name: 'qoli', last_name: 'qolizadeh',
       email: 'qoli@gmail.com')
       sign_in(user)
       get '/users'
