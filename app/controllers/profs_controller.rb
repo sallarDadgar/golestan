@@ -1,5 +1,7 @@
 class ProfsController < ApplicationController
   def index
+    profs = Prof.all
+    render jsonapi: profs
   end
 
   def create
