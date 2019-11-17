@@ -1,5 +1,7 @@
 class AdminsController < ApplicationController
   def index
+    admins = Admin.all
+    render jsonapi: admins
   end
 
   def create
