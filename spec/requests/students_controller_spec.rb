@@ -47,7 +47,7 @@ RSpec.describe 'Students Controller', type: :request do
                                email: 'qoli@gmail.com', fkey: student)
           sign_in(user)
           get "/students/#{student.id}"
-          binding.pry
+        #   binding.pry
         #   expect(json['data'].size).to eql(1)
           expect(json['data']['id'].to_i).to eql(student.id)
           expect(json['data']['attributes']['birthPlace']).to eql('Iran')

@@ -16,6 +16,10 @@ class ProfsController < ApplicationController
       end
   end
 
+  def show
+    render jsonapi: Prof.find(params[:id])
+  end
+
   private
 
   def prof_params

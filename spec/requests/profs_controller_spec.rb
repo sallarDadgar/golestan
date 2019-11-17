@@ -39,4 +39,24 @@ RSpec.describe 'profs Controller', type: :request do
             expect(json['profSaved']).to eql(true)
         end
     end
+
+    context '.show' do
+        it 'should return specified user' do
+            prof = create(:prof, college: 'MIT', experience: '5 years')
+          user = create(:user, role: :prof, frst_name: 'qoli', last_name: 'qolizadeh',
+                               email: 'qoli@gmail.com', fkey: prof)
+          sign_in(user)
+          get "/profs/#{prof.id}"
+        #   binding.pry
+        #   expect(json['data'].size).to eql(1)
+          expect(json['data']['id'].to_i).to eql(prof.id)
+          expect(json['data']['attributes']['college']).to eql('MIT')
+          expect(json['data']['attributes']['experience']).to eql('5 years')
+          expect(json['data']['attributes']['user']['frst_name']).to eql('qoli')
+          expect(json['data']['attributes']['user']['last_name']).to eql('qolizadeh')
+          expect(json['data']['attributes']['user']['email']).to eql('qoli@gmail.com')
+          expect(json['data']['attributes']['user']['role']).to eql('prof')
+          expect(json['data']['attributes']['user']['fkey_id']).to eql(prof.id)
+        end
+    end
 end
