@@ -16,6 +16,12 @@ class AdminsController < ApplicationController
       end
   end
 
+  # def show
+  #   admin = Admin.new(admin_params)
+  #   admin.user.role = 'admin'
+  #   render jsonapi: Admin.find(params[:id])
+  # end
+
   private
 
   def admin_params

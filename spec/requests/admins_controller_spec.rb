@@ -41,4 +41,9 @@ RSpec.describe 'Admins Controller', type: :request do
       expect(json['adminSaved']).to eql(true)
     end
   end
+
+  # context '.show' do
+  #   it 'should return specified user' do
+  #   end
+  # end
 end

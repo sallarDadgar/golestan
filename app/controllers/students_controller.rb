@@ -16,6 +16,13 @@ class StudentsController < ApplicationController
       end
   end
 
+
+  def show
+    # student = Student.new()
+    # student.user.role = 'student'
+    render jsonapi: Student.find(params[:id])
+  end
+
   private
 
   def student_params
