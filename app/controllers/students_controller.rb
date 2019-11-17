@@ -1,5 +1,7 @@
 class StudentsController < ApplicationController
   def index
+    students = Student.all
+    render jsonapi: students
   end
 
   def create
