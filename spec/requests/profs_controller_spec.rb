@@ -59,4 +59,35 @@ RSpec.describe 'profs Controller', type: :request do
           expect(json['data']['attributes']['user']['fkey_id']).to eql(prof.id)
         end
     end
+
+    context '.update' do
+      it 'should update specified user' do
+          prof = create(:prof, college: 'MIT', experience: '5 years')
+          user = create(:user, role: :prof, frst_name: 'qoli', last_name: 'qolizadeh',
+                              email: 'qoli@gmail.com', fkey: prof)
+
+          sign_in(user)
+
+          patch "/profs/#{prof.id}", params: {
+              prof: {
+                  id: prof.id,
+                  college: 'MIT',
+                  experience: '5 years',
+                  user_attributes: {
+                      id: user.id,
+                      fkey: prof,
+                      role: :prof,
+                      frst_name: 'ahmad',
+                      last_name: 'ahmadi',
+                      profile: 'my image',
+                      code: '3223234344',
+                      password: 'ARELSADA',
+                      password_confirmation: 'ARELSADA',
+                      email: 'stuff@stuff.com'
+                  }
+              }
+          }
+          expect(json['newname']).to eql('ahmad')
+      end
+  end
 end

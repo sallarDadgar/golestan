@@ -5,10 +5,13 @@ class StudentsController < ApplicationController
   end
 
   def create
+      # binding.pry
       student = Student.new(student_params)
+      # binding.pry
       student.user.role = 'student'
 
       if student.save
+          # binding.pry
           render json: {studentSaved: true}
       else
         #   binding.pry
@@ -23,13 +26,26 @@ class StudentsController < ApplicationController
     render jsonapi: Student.find(params[:id])
   end
 
+  def edit
+  end
+
+  def update
+    student = Student.find(params[:id])
+    student.update_attributes!(student_params)
+    if student.update(student_params)
+      render json: { newname: student.user.frst_name}
+    else
+      render json: { newname: 'not updated'}
+    end
+  end
+
   private
 
   def student_params
       params.require(:student).permit(
           :birthPlace,:rank,
           user_attributes: [
-            #   :id,
+              :id,
               :profile,
               :frst_name,
               :last_name,

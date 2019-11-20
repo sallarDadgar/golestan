@@ -20,13 +20,26 @@ class ProfsController < ApplicationController
     render jsonapi: Prof.find(params[:id])
   end
 
+  def edit
+  end
+
+  def update
+    prof = Prof.find(params[:id])
+    prof.update_attributes!(prof_params)
+    if prof.update(prof_params)
+      render json: { newname: prof.user.frst_name}
+    else
+      render json: { newname: 'not updated'}
+    end
+  end
+
   private
 
   def prof_params
       params.require(:prof).permit(
           :college,:experience,
           user_attributes: [
-            #   :id,
+              :id,
               :profile,
               :frst_name,
               :last_name,
