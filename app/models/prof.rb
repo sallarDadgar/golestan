@@ -10,7 +10,7 @@
 #
 
 class Prof < ApplicationRecord
-  has_one :user, as: :fkey
+  has_one :user, as: :fkey, dependent: :destroy
   validates :college, presence: true
   validates :experience, presence: true
 

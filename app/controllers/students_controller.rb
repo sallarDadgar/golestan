@@ -39,6 +39,12 @@ class StudentsController < ApplicationController
     end
   end
 
+  def destroy
+    student = Student.find(params[:id])
+    student.destroy
+    render json: {studentcounted: Student.count, usercounted: User.count}
+  end
+
   private
 
   def student_params

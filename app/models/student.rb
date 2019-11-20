@@ -10,7 +10,7 @@
 #
 
 class Student < ApplicationRecord
-  has_one :user, as: :fkey
+  has_one :user, as: :fkey, dependent: :destroy
 
   validates :birthPlace, presence: true
   validates :rank, presence: true

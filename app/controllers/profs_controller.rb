@@ -33,6 +33,12 @@ class ProfsController < ApplicationController
     end
   end
 
+  def destroy
+    prof = Prof.find(params[:id])
+    prof.destroy
+    render json: {profcounted: Prof.count, usercounted: User.count}
+  end
+
   private
 
   def prof_params

@@ -91,4 +91,36 @@ RSpec.describe 'Students Controller', type: :request do
             expect(json['newname']).to eql('ahmad')
         end
     end
+
+    context '.destroy' do
+        it 'should delete specified user' do
+            student = create(:student, birthPlace: 'Iran', rank: '1000200')
+            user = create(:user, role: :student, frst_name: 'qoli', last_name: 'qolizadeh',
+                                email: 'qoli@gmail.com', fkey: student)
+
+            sign_in(user)
+
+            delete "/students/#{student.id}", params: {
+                student: {
+                    id: student.id,
+                    birthPlace: 'iran',
+                    rank: '1000',
+                    user_attributes: {
+                        id: user.id,
+                        fkey: student,
+                        role: :student,
+                        frst_name: 'ahmad',
+                        last_name: 'ahmadi',
+                        profile: 'my image',
+                        code: '3223234344',
+                        password: 'ARELSADA',
+                        password_confirmation: 'ARELSADA',
+                        email: 'stuff@stuff.com'
+                    }
+                }
+            }
+            expect(json['studentcounted']).to eql(0)
+            expect(json['usercounted']).to eql(0)
+        end
+    end
 end
