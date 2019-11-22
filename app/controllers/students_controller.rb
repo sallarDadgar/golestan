@@ -1,28 +1,27 @@
 class StudentsController < ApplicationController
   def index
+    authorize(Student)
+    # authorize(User)
     students = Student.all
     render jsonapi: students
   end
 
   def create
-      # binding.pry
-      student = Student.new(student_params)
-      # binding.pry
-      student.user.role = 'student'
+    authorize(Student)
+    # authorize(User)
+    student = Student.new(student_params)
+    student.user.role = 'student'
 
-      if student.save
-          # binding.pry
-          render json: {studentSaved: true}
-      else
-        #   binding.pry
-          render json: {studentSaved: false}
-      end
+    if student.save
+        render json: {studentSaved: true}
+    else
+        render json: {studentSaved: false}
+    end
   end
 
 
   def show
-    # student = Student.new()
-    # student.user.role = 'student'
+    authorize(Student)
     render jsonapi: Student.find(params[:id])
   end
 
@@ -30,6 +29,7 @@ class StudentsController < ApplicationController
   end
 
   def update
+    authorize(Student)
     student = Student.find(params[:id])
     student.update_attributes!(student_params)
     if student.update(student_params)
@@ -40,6 +40,7 @@ class StudentsController < ApplicationController
   end
 
   def destroy
+    authorize(Student)
     student = Student.find(params[:id])
     student.destroy
     render json: {studentcounted: Student.count, usercounted: User.count}

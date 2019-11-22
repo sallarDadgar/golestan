@@ -39,7 +39,6 @@ class User < ApplicationRecord
 	validates :last_name, presence: true
 	validates :profile, presence: true
 	validates :role, presence: true
-  # validates :email, presence: true
 	validates :code, presence: true
 
   def full_name
