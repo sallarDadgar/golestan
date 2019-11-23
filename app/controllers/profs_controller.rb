@@ -1,10 +1,12 @@
 class ProfsController < ApplicationController
   def index
+    authorize(Prof)
     profs = Prof.all
     render jsonapi: profs
   end
 
   def create
+    authorize(Prof)
       prof = Prof.new(prof_params)
       prof.user.role = 'prof'
 
@@ -17,6 +19,7 @@ class ProfsController < ApplicationController
   end
 
   def show
+    authorize(Prof)
     render jsonapi: Prof.find(params[:id])
   end
 
@@ -24,6 +27,7 @@ class ProfsController < ApplicationController
   end
 
   def update
+    authorize(Prof)
     prof = Prof.find(params[:id])
     prof.update_attributes!(prof_params)
     if prof.update(prof_params)
@@ -34,6 +38,7 @@ class ProfsController < ApplicationController
   end
 
   def destroy
+    authorize(Prof)
     prof = Prof.find(params[:id])
     prof.destroy
     render json: {profcounted: Prof.count, usercounted: User.count}
