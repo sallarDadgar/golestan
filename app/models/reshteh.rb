@@ -9,4 +9,5 @@
 #
 
 class Reshteh < ApplicationRecord
+  validates :title, presence: true
 end

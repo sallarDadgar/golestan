@@ -10,4 +10,6 @@
 #
 
 class Field < ApplicationRecord
+  validates :title, presence: true
+  validates :unit, presence: true
 end
