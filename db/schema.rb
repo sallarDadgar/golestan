@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_051842) do
+ActiveRecord::Schema.define(version: 2019_11_25_052827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,9 @@ ActiveRecord::Schema.define(version: 2019_11_25_051842) do
     t.string "unit"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "fkey_type", null: false
+    t.bigint "fkey_id", null: false
+    t.index ["fkey_type", "fkey_id"], name: "index_fields_on_fkey_type_and_fkey_id"
   end
 
   create_table "lessons", force: :cascade do |t|

@@ -10,4 +10,5 @@
 
 class Reshteh < ApplicationRecord
   validates :title, presence: true
+  has_many :fields, as: :fkey
 end
