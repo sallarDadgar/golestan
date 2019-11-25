@@ -39,9 +39,14 @@ RSpec.describe 'Students Controller', type: :request do
                         password: 'ARELSADA',
                         password_confirmation: 'ARELSADA'
                     }
+                    # stusons_attributes: [
+                    #     {lesson: 2, mark: '14'},
+                    #     {lesson: 3, mark: '15'},
+                    #     {lesson: 1, mark: '20'}
+                    # ]
                 }
             }
-            binding.pry
+            # binding.pry
             expect(json['studentSaved']).to eql(true)
         end
     end

@@ -1,5 +1,6 @@
 class StusonsController < ApplicationController
   def update
+    authorize(Stuson)
     stuson = Stuson.find(params[:id])
     stuson.update_attributes!(stuson_params)
     if stuson.update(stuson_params)

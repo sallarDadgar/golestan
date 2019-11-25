@@ -4,7 +4,7 @@ RSpec.describe "stusons controller", type: :request do
   context '.update' do
     it 'should update specified user' do
       admin = create(:admin, age: '33', nationality: 'iran')
-      user2 = create(:user, role: :admin, frst_name: 'qoli', last_name: 'qolizadeh',
+      user2 = create(:user, role: :prof, frst_name: 'qoli', last_name: 'qolizadeh',
           email: 'qoli2@gmail.com', fkey: admin)
       sign_in(user2)
       student = create(:student)

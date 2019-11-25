@@ -9,11 +9,16 @@ class StudentsController < ApplicationController
   def create
     authorize(Student)
     # authorize(User)
+    # for(int i; i == params['student']['stusons'].length; i++){
+    #   Stuson.new(params['student']['stusons'])
+    # }
     student = Student.new(student_params)
     student.user.role = 'student'
+    # student.stusons.builld
+    # student.stusons_ids =
 
     if student.save
-        render json: {studentSaved: true}
+        render json: {studentSaved: true, aaa: Stuson.count}
     else
         render json: {studentSaved: false}
     end
@@ -60,6 +65,10 @@ class StudentsController < ApplicationController
               :password,
               :code,
           ]
+          # stusons_attributes: [
+          #   :lesson,
+          #   :mark
+          # ]
       )
   end
 end
