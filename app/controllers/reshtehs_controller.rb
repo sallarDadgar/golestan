@@ -1,10 +1,12 @@
 class ReshtehsController < ApplicationController
   def index
+    authorize(Prof)
     reshtehs = Reshteh.all
     render jsonapi: reshtehs
   end
 
   def create
+    authorize(Prof)
       rehteh1 = Reshteh.new(reshteh_params)
       if rehteh1.save
           render json: {reshtehSaved: true}
@@ -14,13 +16,16 @@ class ReshtehsController < ApplicationController
   end
 
   def show
+    authorize(Prof)
     render jsonapi: Reshteh.find(params[:id])
   end
 
   def edit
+    authorize(Prof)
   end
 
   def update
+    authorize(Prof)
     reshteh = Reshteh.find(params[:id])
     if reshteh.update(reshteh_params)
       render json: { newtitle: reshteh.title}
@@ -30,6 +35,7 @@ class ReshtehsController < ApplicationController
   end
 
   def destroy
+    authorize(Prof)
     reshteh = Reshteh.find(params[:id])
     reshteh.destroy
     render json: {reshtehcounted: Reshteh.count}
