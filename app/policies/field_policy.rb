@@ -2,7 +2,7 @@ class FieldPolicy < ApplicationPolicy
   attr_reader :user, :record
 
   def index?
-    user.admin?
+    user.admin? or user.student?
   end
 
   def create?
@@ -19,5 +19,22 @@ class FieldPolicy < ApplicationPolicy
 
   def destroy?
     user.admin?
+  end
+
+  class Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
+    def resolve
+      if user.admin?
+        scope.all
+      elsif user.student?
+        scope.all
+      end
+    end
   end
 end
