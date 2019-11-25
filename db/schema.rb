@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_052827) do
+ActiveRecord::Schema.define(version: 2019_11_25_100512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,16 @@ ActiveRecord::Schema.define(version: 2019_11_25_052827) do
     t.string "rank"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "stusons", force: :cascade do |t|
+    t.integer "lesson"
+    t.string "mark"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "fk_type", null: false
+    t.bigint "fk_id", null: false
+    t.index ["fk_type", "fk_id"], name: "index_stusons_on_fk_type_and_fk_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   resources :profs
   resources :fields
   resources :reshtehs
+  resources :stusons
 end

@@ -28,6 +28,7 @@ RSpec.describe 'Students Controller', type: :request do
             user = create(:user, role: :admin, fkey: currentstudent)
             sign_in(user)
             student = create(:student)
+
             post '/students', params: {
                 student:{
                     birthPlace: 'iran',
@@ -40,6 +41,7 @@ RSpec.describe 'Students Controller', type: :request do
                     }
                 }
             }
+            binding.pry
             expect(json['studentSaved']).to eql(true)
         end
     end
