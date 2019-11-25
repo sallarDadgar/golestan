@@ -7,6 +7,8 @@ RSpec.describe 'reshtehs Controller', type: :request do
       user2 = create(:user, role: :admin, frst_name: 'qoli', last_name: 'qolizadeh',
           email: 'qoli2@gmail.com', fkey: admin)
       reshteh1 = create(:reshteh, title: 'math')
+      # field1 = create(:field, title: 'math1', unit: '3', fkey: reshteh1)
+      # filed2 = create(:field, title: 'math2', unit: '4', fkey: reshteh1)
       sign_in(user2)
       get '/reshtehs'
       expect(json['data'].size).to eql(1)

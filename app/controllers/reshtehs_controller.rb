@@ -39,7 +39,11 @@ class ReshtehsController < ApplicationController
 
   def reshteh_params
       params.require(:reshteh).permit(
-          :title
+          :title,
+          lessons_attributes: [
+            :title,
+            :unit
+          ]
       )
   end
 end
