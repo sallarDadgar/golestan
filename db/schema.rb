@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_100512) do
+ActiveRecord::Schema.define(version: 2019_11_26_060952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 2019_11_25_100512) do
     t.string "experience"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "projors", force: :cascade do |t|
+    t.integer "prof"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "forek_type", null: false
+    t.bigint "forek_id", null: false
+    t.index ["forek_type", "forek_id"], name: "index_projors_on_forek_type_and_forek_id"
   end
 
   create_table "reshtehs", force: :cascade do |t|

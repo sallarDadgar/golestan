@@ -16,6 +16,7 @@
 #
 
 class Field < ApplicationRecord
+  has_one :projor, as: :forek, dependent: :destroy
   validates :title, presence: true
   validates :unit, presence: true
   belongs_to :fkey, polymorphic: true
