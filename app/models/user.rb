@@ -39,7 +39,10 @@ class User < ApplicationRecord
 	validates :last_name, presence: true
 	validates :profile, presence: true
 	validates :role, presence: true
-	validates :code, presence: true
+  validates :code, presence: true
+
+
+  # mount_uploader :profile, AttachmentUploader
 
   def full_name
 		"#{frst_name} #{last_name}"

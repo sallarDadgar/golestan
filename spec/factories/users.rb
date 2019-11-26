@@ -33,6 +33,9 @@ FactoryGirl.define do
     password { 'ARELSADA '}
     code "MyString"
     role { %i(admin prof student).sample}
-    profile "MyString"
+    # File.open('somewhere') do |f|
+    #   profile = f
+    # end
+    profile "app/assets/images/play1.jpeg"
   end
 end
