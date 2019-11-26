@@ -38,12 +38,12 @@ RSpec.describe 'Students Controller', type: :request do
                         email: 'alizadeh@gmail.com', code: '3223234344',
                         password: 'ARELSADA',
                         password_confirmation: 'ARELSADA'
-                    }
-                    # stusons_attributes: [
-                    #     {lesson: 2, mark: '14'},
-                    #     {lesson: 3, mark: '15'},
-                    #     {lesson: 1, mark: '20'}
-                    # ]
+                    },
+                    stusons_attributes: [
+                        {lesson: 2, mark: '14'},
+                        {lesson: 3, mark: '15'},
+                        {lesson: 1, mark: '20'}
+                    ]
                 }
             }
             # binding.pry
@@ -135,11 +135,17 @@ RSpec.describe 'Students Controller', type: :request do
                         password: 'ARELSADA',
                         password_confirmation: 'ARELSADA',
                         email: 'stuff@stuff.com'
-                    }
+                    },
+                    stusons_attributes: [
+                        {lesson: 2, mark: '14'},
+                        {lesson: 3, mark: '15'},
+                        {lesson: 1, mark: '20'}
+                    ]
                 }
             }
             expect(json['studentcounted']).to eql(0)
             expect(json['usercounted']).to eql(1)
+            expect(json['stusoncounted']).to eql(0)
         end
     end
 end

@@ -1,4 +1,16 @@
 class StusonsController < ApplicationController
+
+  def create
+    authorize(Stuson)
+    stuson = Stuson.new(stuson_params)
+    if stuson.save
+      render json: { stusonsaved: true }
+    else
+      render json: { stusonsaved: false }
+    end
+  end
+
+
   def update
     authorize(Stuson)
     stuson = Stuson.find(params[:id])

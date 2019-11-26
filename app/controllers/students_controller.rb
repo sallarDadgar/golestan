@@ -8,15 +8,9 @@ class StudentsController < ApplicationController
 
   def create
     authorize(Student)
-    # authorize(User)
-    # for(int i; i == params['student']['stusons'].length; i++){
-    #   Stuson.new(params['student']['stusons'])
-    # }
     student = Student.new(student_params)
     student.user.role = 'student'
-    # student.stusons.builld
-    # student.stusons_ids =
-
+    # binding.pry
     if student.save
         render json: {studentSaved: true, aaa: Stuson.count}
     else
@@ -48,7 +42,7 @@ class StudentsController < ApplicationController
     authorize(Student)
     student = Student.find(params[:id])
     student.destroy
-    render json: {studentcounted: Student.count, usercounted: User.count}
+    render json: {studentcounted: Student.count, usercounted: User.count, stusoncounted: Stuson.count}
   end
 
   private
@@ -64,11 +58,11 @@ class StudentsController < ApplicationController
               :email,
               :password,
               :code,
+          ],
+          stusons_attributes: [
+            :lesson,
+            :mark
           ]
-          # stusons_attributes: [
-          #   :lesson,
-          #   :mark
-          # ]
       )
   end
 end
