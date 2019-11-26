@@ -1,5 +1,5 @@
 class SerializableField < JSONAPI::Serializable::Resource
   type 'fields'
 
-  attributes :title, :unit
+  attributes :title, :unit, :projor
 end

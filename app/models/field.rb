@@ -20,4 +20,5 @@ class Field < ApplicationRecord
   validates :title, presence: true
   validates :unit, presence: true
   belongs_to :fkey, polymorphic: true
+  accepts_nested_attributes_for :projor
 end

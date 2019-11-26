@@ -46,7 +46,6 @@ RSpec.describe 'Students Controller', type: :request do
                     ]
                 }
             }
-            # binding.pry
             expect(json['studentSaved']).to eql(true)
         end
     end

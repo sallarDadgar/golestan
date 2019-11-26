@@ -20,6 +20,7 @@ RSpec.describe 'fields Controller', type: :request do
     it 'should add lesson' do
         currentprof = create(:admin)
         currentuser = create(:user, role: :admin, fkey: currentprof)
+        prof = create(:prof)
         sign_in(currentuser)
         reshteh1 = create(:reshteh, title: 'math')
         post '/fields', params: {
@@ -27,9 +28,13 @@ RSpec.describe 'fields Controller', type: :request do
             title: 'math1',
             unit: '3',
             fkey_type: 'Reshteh',
-            fkey_id: reshteh1.id
+            fkey_id: reshteh1.id,
+            projor_attributes: {
+              prof: prof.id
+            }
           }
         }
+        # binding.pry
         expect(json['fieldSaved']).to eql(true)
     end
   end

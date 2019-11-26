@@ -9,7 +9,7 @@ class FieldsController < ApplicationController
     authorize(Field)
     field1 = Field.new(field_params)
     if field1.save
-        render json: {fieldSaved: true}
+        render json: {fieldSaved: true, projorcount: Projor.count}
     else
         render json: {fieldSaved: false}
     end
@@ -45,7 +45,10 @@ class FieldsController < ApplicationController
 
   def field_params
       params.require(:field).permit(
-          :title, :unit, :fkey_id, :fkey_type
+          :title, :unit, :fkey_id, :fkey_type,
+          projor_attributes: [
+              :prof
+          ]
       )
   end
 end
