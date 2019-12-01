@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   def index
     authorize(User)
@@ -5,6 +7,5 @@ class UsersController < ApplicationController
     render jsonapi: users
   end
 
-  def create
-  end
+  def create; end
 end

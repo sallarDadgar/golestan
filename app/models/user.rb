@@ -32,19 +32,17 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  enum role: %i(admin prof student)
+  enum role: %i[admin prof student]
 
   belongs_to :fkey, polymorphic: true
   validates :frst_name, presence: true
-	validates :last_name, presence: true
-	validates :profile, presence: true
-	validates :role, presence: true
+  validates :last_name, presence: true
+  validates :profile, presence: true
+  validates :role, presence: true
   validates :code, presence: true
-
-
   # mount_uploader :profile, AttachmentUploader
 
   def full_name
-		"#{frst_name} #{last_name}"
-	end
+    "#{frst_name} #{last_name}"
+  end
 end

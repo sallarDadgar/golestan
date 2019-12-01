@@ -11,7 +11,7 @@ class SessionsController < Devise::SessionsController
     if signed_out
       render json: { logout: true }
     else
-      render json: { logout: false}
+      render json: { logout: false }
     end
   end
 
@@ -19,7 +19,7 @@ class SessionsController < Devise::SessionsController
     scope = Devise::Mapping.find_scope!(resource_or_scope)
     resource ||= resource_or_scope
     sign_in(scope, resource) unless warden.user(scope) == resource
-      render json: { success: true }
+    render json: { success: true }
   end
 
   def failure
@@ -27,6 +27,6 @@ class SessionsController < Devise::SessionsController
   end
 
   def respond_to_on_destroy
-    render json: { logout: true}
+    render json: { logout: true }
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FieldsController < ApplicationController
   def index
     authorize(Field)
@@ -9,9 +11,9 @@ class FieldsController < ApplicationController
     authorize(Field)
     field1 = Field.new(field_params)
     if field1.save
-        render json: {fieldSaved: true, projorcount: Projor.count}
+      render json: { fieldSaved: true, projorcount: Projor.count }
     else
-        render json: {fieldSaved: false}
+      render json: { fieldSaved: false }
     end
   end
 
@@ -28,9 +30,9 @@ class FieldsController < ApplicationController
     authorize(Field)
     field = Field.find(params[:id])
     if field.update(field_params)
-      render json: { newtitle: field.title}
+      render json: { newtitle: field.title }
     else
-      render json: { newtitle: 'not updated'}
+      render json: { newtitle: 'not updated' }
     end
   end
 
@@ -38,17 +40,17 @@ class FieldsController < ApplicationController
     authorize(Field)
     field = Field.find(params[:id])
     field.destroy
-    render json: {fieldcounted: Field.count}
+    render json: { fieldcounted: Field.count }
   end
 
   private
 
   def field_params
-      params.require(:field).permit(
-          :title, :unit, :fkey_id, :fkey_type,
-          projor_attributes: [
-              :prof
-          ]
-      )
+    params.require(:field).permit(
+      :title, :unit, :fkey_id, :fkey_type,
+      projor_attributes: [
+        :prof
+      ]
+    )
   end
 end

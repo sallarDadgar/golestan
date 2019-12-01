@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ReshtehsController < ApplicationController
   def index
     authorize(Reshteh)
@@ -9,9 +11,9 @@ class ReshtehsController < ApplicationController
     authorize(Reshteh)
     rehteh1 = Reshteh.new(reshteh_params)
     if rehteh1.save
-      render json: {reshtehSaved: true}
+      render json: { reshtehSaved: true }
     else
-      render json: {reshtehSaved: false}
+      render json: { reshtehSaved: false }
     end
   end
 
@@ -28,9 +30,9 @@ class ReshtehsController < ApplicationController
     authorize(Reshteh)
     reshteh = Reshteh.find(params[:id])
     if reshteh.update(reshteh_params)
-      render json: { newtitle: reshteh.title}
+      render json: { newtitle: reshteh.title }
     else
-      render json: { newtitle: 'not updated'}
+      render json: { newtitle: 'not updated' }
     end
   end
 
@@ -38,18 +40,18 @@ class ReshtehsController < ApplicationController
     authorize(Reshteh)
     reshteh = Reshteh.find(params[:id])
     reshteh.destroy
-    render json: {reshtehcounted: Reshteh.count}
+    render json: { reshtehcounted: Reshteh.count }
   end
 
   private
 
   def reshteh_params
-      params.require(:reshteh).permit(
-          :title,
-          lessons_attributes: [
-            :title,
-            :unit
-          ]
-      )
+    params.require(:reshteh).permit(
+      :title,
+      lessons_attributes: %i[
+        title
+        unit
+      ]
+    )
   end
 end
