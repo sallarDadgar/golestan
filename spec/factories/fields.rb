@@ -17,7 +17,7 @@
 
 FactoryGirl.define do
   factory :field do
-    title "MyString"
-    unit "MyString"
+    title { FFaker::DizzleIpsum.phrase }
+    unit { FFaker::AddressGR.street_nbr }.to_s
   end
 end

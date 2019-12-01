@@ -11,7 +11,7 @@
 
 FactoryGirl.define do
   factory :student do
-    birthPlace "MyString"
-    rank "MyString"
+    birthPlace { FFaker::DizzleIpsum.phrase }
+    rank { FFaker::AddressGR.street_nbr }.to_s
   end
 end

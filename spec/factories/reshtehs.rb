@@ -10,6 +10,6 @@
 
 FactoryGirl.define do
   factory :reshteh do
-    title "MyString"
+    title { FFaker::DizzleIpsum.phrase }
   end
 end

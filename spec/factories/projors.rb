@@ -16,6 +16,6 @@
 
 FactoryGirl.define do
   factory :projor do
-    prof 1
+    prof { FFaker::AddressGR.street_nbr }
   end
 end

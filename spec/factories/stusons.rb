@@ -17,7 +17,7 @@
 
 FactoryGirl.define do
   factory :stuson do
-    lesson 1
-    mark "MyString"
+    lesson { FFaker::AddressGR.street_nbr }
+    mark { FFaker::AddressGR.street_nbr }.to_s
   end
 end

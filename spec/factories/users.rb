@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -30,12 +32,12 @@ FactoryGirl.define do
     frst_name { FFaker::Name.first_name }
     last_name { FFaker::Name.last_name }
     email FFaker::Internet.email
-    password { 'ARELSADA '}
-    code "MyString"
-    role { %i(admin prof student).sample}
+    password { 'ARELSADA' }
+    code { FFaker::AddressGR.street_nbr }.to_s
+    role { %i[admin prof student].sample }
     # File.open('somewhere') do |f|
     #   profile = f
     # end
-    profile "app/assets/images/play1.jpeg"
+    profile 'app/assets/images/play1.jpeg'
   end
 end

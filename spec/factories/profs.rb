@@ -11,7 +11,7 @@
 
 FactoryGirl.define do
   factory :prof do
-    college "MyString"
-    experience "MyString"
+    college { FFaker::DizzleIpsum.phrase }
+    experience { FFaker::DizzleIpsum.phrase }
   end
 end

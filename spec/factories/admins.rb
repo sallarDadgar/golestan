@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: admins
@@ -11,7 +13,7 @@
 
 FactoryGirl.define do
   factory :admin do
-    age "MyString"
-    nationality "MyString"
+    age { FFaker::AddressGR.street_nbr }.to_s
+    nationality { FFaker::DizzleIpsum.phrase }
   end
 end
