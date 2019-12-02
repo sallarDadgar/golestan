@@ -4,7 +4,7 @@ class ProfsController < ApplicationController
   def index
     authorize(Prof)
     profs = Prof.all
-    render jsonapi: profs
+    render jsonapi: profs, include: ['user']
   end
 
   def create
@@ -13,16 +13,16 @@ class ProfsController < ApplicationController
     prof.user.role = 'prof'
 
     if prof.save
-      render json: { profSaved: true }
+      render jsonapi: prof, include: ['user']
     else
       #   binding.pry
-      render json: { profSaved: false }
+      render json: prof.errors, status: :unprocessable_entity
     end
   end
 
   def show
     authorize(Prof)
-    render jsonapi: Prof.find(params[:id])
+    render jsonapi: Prof.find(params[:id]), include: ['user']
   end
 
   def edit; end
@@ -30,19 +30,22 @@ class ProfsController < ApplicationController
   def update
     authorize(Prof)
     prof = Prof.find(params[:id])
-    prof.update_attributes!(prof_params)
+    # prof.update_attributes!(prof_params)
     if prof.update(prof_params)
-      render json: { newname: prof.user.frst_name }
+      render jsonapi: prof, include: ['user']
     else
-      render json: { newname: 'not updated' }
+      render json: prof.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
     authorize(Prof)
     prof = Prof.find(params[:id])
-    prof.destroy
-    render json: { profcounted: Prof.count, usercounted: User.count }
+    if prof.destroy
+      render json: { prof_destroyed: 'prof was destroyed' }
+    else
+      render json: prof.errors
+    end
   end
 
   private

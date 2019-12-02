@@ -5,7 +5,7 @@ class StudentsController < ApplicationController
     authorize(Student)
     # authorize(User)
     students = Student.all
-    render jsonapi: students
+    render jsonapi: students, include: ['user', 'stusons']
   end
 
   def create
@@ -14,15 +14,15 @@ class StudentsController < ApplicationController
     student.user.role = 'student'
     # binding.pry
     if student.save
-      render json: { studentSaved: true, aaa: Stuson.count }
+      render jsonapi: student, include: ['user', 'stusons']
     else
-      render json: { studentSaved: false }
+      render json: student.errors, status: :unprocessable_entity
     end
   end
 
   def show
     authorize(Student)
-    render jsonapi: Student.find(params[:id])
+    render jsonapi: Student.find(params[:id]), include: ['user', 'stusons']
   end
 
   def edit; end
@@ -30,19 +30,26 @@ class StudentsController < ApplicationController
   def update
     authorize(Student)
     student = Student.find(params[:id])
-    student.update_attributes!(student_params)
     if student.update(student_params)
-      render json: { newname: student.user.frst_name }
+      render jsonapi: student,
+             include: ['user', 'stusons']
+                # %w(
+                #   student.user
+                #   student.stusons
+                # )
     else
-      render json: { newname: 'not updated' }
+      render json: student.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
     authorize(Student)
     student = Student.find(params[:id])
-    student.destroy
-    render json: { studentcounted: Student.count, usercounted: User.count, stusoncounted: Stuson.count }
+    if student.destroy
+      render json: { student_destroyed: 'student was destroyed' }
+    else
+      render json: student.errors
+    end
   end
 
   private
