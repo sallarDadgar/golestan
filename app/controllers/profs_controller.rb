@@ -60,6 +60,7 @@ class ProfsController < ApplicationController
         last_name
         email
         password
+        password_confirmation
         code
       ]
     )

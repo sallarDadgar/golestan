@@ -64,6 +64,7 @@ class StudentsController < ApplicationController
         last_name
         email
         password
+        password_confirmation
         code
       ],
       stusons_attributes: %i[

@@ -42,8 +42,26 @@ RSpec.describe 'Admins Controller', type: :request do
     end
   end
 
-  # context '.show' do
-  #   it 'should return specified user' do
+  # context 'invalid params' do
+  #   context '.create' do
+  #     it 'should not add admin when no age provided' do
+  #       currentadmin = create(:admin)
+  #       currentuser = create(:user, fkey: currentadmin)
+  #       sign_in(currentuser)
+  #       post '/admins', params: {
+  #         admin: {
+  #           age: '', nationality: 'IR',
+  #           user_attributes: {
+  #             profile: 'my image', frst_name: 'ali', last_name: 'alizadeh',
+  #             email: 'alizadeh@gmail.com', code: '3223234344',
+  #             password: 'ARELSADA',
+  #             password_confirmation: 'ARELSADA'
+  #           }
+  #         }
+  #       }
+  #       binding.pry
+  #       expect(json['messages']).to eql(true)
+  #     end
   #   end
   # end
 end
