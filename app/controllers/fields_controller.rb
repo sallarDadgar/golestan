@@ -4,22 +4,22 @@ class FieldsController < ApplicationController
   def index
     authorize(Field)
     fields = Field.all
-    render jsonapi: fields
+    render jsonapi: fields, include: ['projor']
   end
 
   def create
     authorize(Field)
     field1 = Field.new(field_params)
     if field1.save
-      render json: { fieldSaved: true, projorcount: Projor.count }
+      render jsonapi: field1, include: ['projor']
     else
-      render json: { fieldSaved: false }
+      render json: field1.errors, status: :unprocessable_entity
     end
   end
 
   def show
     authorize(Field)
-    render jsonapi: Field.find(params[:id])
+    render jsonapi: Field.find(params[:id]), include: ['projor']
   end
 
   def edit
@@ -30,17 +30,20 @@ class FieldsController < ApplicationController
     authorize(Field)
     field = Field.find(params[:id])
     if field.update(field_params)
-      render json: { newtitle: field.title }
+      render jsonapi: field, include: ['projor']
     else
-      render json: { newtitle: 'not updated' }
+      render json: field.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
     authorize(Field)
     field = Field.find(params[:id])
-    field.destroy
-    render json: { fieldcounted: Field.count }
+    if field.destroy
+      render json: { field_destroyed: 'field was destroyed' }
+    else
+      render json: field.errors
+    end
   end
 
   private

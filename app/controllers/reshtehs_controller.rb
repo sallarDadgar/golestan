@@ -4,22 +4,24 @@ class ReshtehsController < ApplicationController
   def index
     authorize(Reshteh)
     reshtehs = Reshteh.all
-    render jsonapi: reshtehs
+    render jsonapi: reshtehs, include: ['fields', 'fields.projor']
   end
 
   def create
     authorize(Reshteh)
-    rehteh1 = Reshteh.new(reshteh_params)
-    if rehteh1.save
-      render json: { reshtehSaved: true }
+    reshteh1 = Reshteh.new(reshteh_params)
+    if reshteh1.save
+      # render json: {reshte: Reshteh.count, field: Field.count, projor: Projor.count}
+      render jsonapi: reshteh1, include: ['fields']
     else
-      render json: { reshtehSaved: false }
+      render json: reshteh1.errors, status: :unprocessable_entity
     end
   end
 
   def show
     authorize(Reshteh)
-    render jsonapi: Reshteh.find(params[:id])
+    reshteh1 = Reshteh.find(params[:id])
+    render jsonapi: reshteh1, include: ['fields']
   end
 
   def edit
@@ -30,17 +32,20 @@ class ReshtehsController < ApplicationController
     authorize(Reshteh)
     reshteh = Reshteh.find(params[:id])
     if reshteh.update(reshteh_params)
-      render json: { newtitle: reshteh.title }
+      render jsonapi: reshteh, include: ['fields']
     else
-      render json: { newtitle: 'not updated' }
+      render json: reshteh.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
     authorize(Reshteh)
     reshteh = Reshteh.find(params[:id])
-    reshteh.destroy
-    render json: { reshtehcounted: Reshteh.count }
+    if reshteh.destroy
+      render json: { reshteh_destroyed: 'reshteh was destroyed' }
+    else
+      render json: reshteh.errors
+    end
   end
 
   private
@@ -48,9 +53,13 @@ class ReshtehsController < ApplicationController
   def reshteh_params
     params.require(:reshteh).permit(
       :title,
-      lessons_attributes: %i[
+      fields_attributes: %i[
+        id
         title
         unit
+        projor_attributes: %i[
+          prof
+        ]
       ]
     )
   end

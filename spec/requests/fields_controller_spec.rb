@@ -6,14 +6,25 @@ RSpec.describe 'fields Controller', type: :request do
       admin = create(:admin, age: '33', nationality: 'iran')
       user2 = create(:user, role: :admin, frst_name: 'qoli', last_name: 'qolizadeh',
           email: 'qoli2@gmail.com', fkey: admin)
+      prof = create(:prof)
+      user3 = create(:user, role: :prof, frst_name: 'ali', last_name: 'alizadeh',
+        email: 'qoli3@gmail.com', fkey: prof)
       reshteh1 = create(:reshteh, title: 'math')
       field1 = create(:field, title: 'math1', unit: '3', fkey: reshteh1)
+      projor1 = create(:projor, prof: prof.id, forek: field1)
       sign_in(user2)
       get '/fields'
-      expect(json['data'].size).to eql(1)
-      expect(json['data'][0]['id'].to_i).to eql(field1.id)
+
       expect(json['data'][0]['attributes']['title']).to eql('math1')
       expect(json['data'][0]['attributes']['unit']).to eql('3')
+      expect(json['included'][0]['attributes']['prof']).to eql(prof.id)
+      expect(json['included'][0]['attributes']['forek_id']).to eql(field1.id)
+      expect(json['included'][0]['attributes']['forek_type']).to eql('Field')
+
+      # expect(json['data'].size).to eql(1)
+      # expect(json['data'][0]['id'].to_i).to eql(field1.id)
+      # expect(json['data'][0]['attributes']['title']).to eql('math1')
+      # expect(json['data'][0]['attributes']['unit']).to eql('3')
     end
   end
   context '.create' do
@@ -34,8 +45,13 @@ RSpec.describe 'fields Controller', type: :request do
             }
           }
         }
+        field1_id = json['data']['id']
         # binding.pry
-        expect(json['fieldSaved']).to eql(true)
+        expect(json['data']['attributes']['title']).to eql('math1')
+        expect(json['data']['attributes']['unit']).to eql('3')
+        expect(json['included'][0]['attributes']['prof']).to eql(prof.id)
+        expect(json['included'][0]['attributes']['forek_id']).to eql(field1_id.to_i)
+        expect(json['included'][0]['attributes']['forek_type']).to eql('Field')
     end
   end
 
@@ -44,13 +60,25 @@ RSpec.describe 'fields Controller', type: :request do
       admin = create(:admin, age: '33', nationality: 'iran')
       user2 = create(:user, role: :admin, frst_name: 'qoli', last_name: 'qolizadeh',
           email: 'qoli2@gmail.com', fkey: admin)
+      prof = create(:prof)
+      user3 = create(:user, role: :prof, frst_name: 'ali', last_name: 'alizadeh',
+        email: 'qoli3@gmail.com', fkey: prof)
       reshteh1 = create(:reshteh, title: 'math')
       field1 = create(:field, title: 'math1', unit: '3', fkey: reshteh1)
+      projor1 = create(:projor, prof: prof.id, forek: field1)
       sign_in(user2)
       get "/fields/#{field1.id}"
-      expect(json['data']['id'].to_i).to eql(field1.id)
+
       expect(json['data']['attributes']['title']).to eql('math1')
       expect(json['data']['attributes']['unit']).to eql('3')
+      expect(json['included'][0]['attributes']['prof']).to eql(prof.id)
+      expect(json['included'][0]['attributes']['forek_id']).to eql(field1.id)
+      expect(json['included'][0]['attributes']['forek_type']).to eql('Field')
+
+
+      # expect(json['data']['id'].to_i).to eql(field1.id)
+      # expect(json['data']['attributes']['title']).to eql('math1')
+      # expect(json['data']['attributes']['unit']).to eql('3')
     end
   end
 
@@ -59,8 +87,12 @@ RSpec.describe 'fields Controller', type: :request do
           admin = create(:admin, age: '33', nationality: 'iran')
           user2 = create(:user, role: :admin, frst_name: 'qoli', last_name: 'qolizadeh',
               email: 'qoli2@gmail.com', fkey: admin)
+          prof = create(:prof)
+          user3 = create(:user, role: :prof, frst_name: 'ali', last_name: 'alizadeh',
+            email: 'qoli3@gmail.com', fkey: prof)
           reshteh1 = create(:reshteh, title: 'math')
           field1 = create(:field, title: 'math1', unit: '3', fkey: reshteh1)
+          projor1 = create(:projor, prof: prof.id, forek: field1)
           sign_in(user2)
           patch "/fields/#{field1.id}", params: {
             field: {
@@ -69,11 +101,15 @@ RSpec.describe 'fields Controller', type: :request do
                   unit: '4'
               }
             }
-          expect(json['newtitle']).to eql('math2')
-          # get "/majors/#{major1.id}", params: {
-          #   id: major1.id
-          # }
-          # binding.pry
+          expect(json['data']['attributes']['title']).to eql('math2')
+          expect(json['data']['attributes']['unit']).to eql('4')
+          expect(json['included'][0]['attributes']['prof']).to eql(prof.id)
+          expect(json['included'][0]['attributes']['forek_id']).to eql(field1.id)
+          expect(json['included'][0]['attributes']['forek_type']).to eql('Field')
+
+
+
+          # expect(json['newtitle']).to eql('math2')
     end
   end
 
@@ -82,15 +118,19 @@ RSpec.describe 'fields Controller', type: :request do
         admin = create(:admin, age: '33', nationality: 'iran')
         user2 = create(:user, role: :admin, frst_name: 'qoli', last_name: 'qolizadeh',
             email: 'qoli2@gmail.com', fkey: admin)
+        prof = create(:prof)
+        user3 = create(:user, role: :prof, frst_name: 'ali', last_name: 'alizadeh',
+          email: 'qoli3@gmail.com', fkey: prof)
         reshteh1 = create(:reshteh, title: 'math')
         field1 = create(:field, title: 'math1', unit: '3', fkey: reshteh1)
+        projor1 = create(:projor, prof: prof.id, forek: field1)
         sign_in(user2)
             delete "/fields/#{field1.id}", params:{
                 field: {
                     id: field1.id
                 }
             }
-        expect(json['fieldcounted']).to eql(0)
+        expect(json['field_destroyed']).to eql('field was destroyed')
     end
   end
 end
