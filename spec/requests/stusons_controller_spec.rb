@@ -16,7 +16,10 @@ RSpec.describe "stusons controller", type: :request do
           fk_type: 'Student'
         }
       }
-      expect(json['stusonsaved']).to eql(true)
+      expect(json['data']['attributes']['lesson']).to eql(1)
+      expect(json['data']['attributes']['mark']).to eql('18')
+      expect(json['data']['attributes']['fk_id']).to eql(student.id)
+      expect(json['data']['attributes']['fk_type']).to eql('Student')
     end
   end
 
@@ -34,7 +37,8 @@ RSpec.describe "stusons controller", type: :request do
           mark: '18'
         }
       }
-      expect(json['newmark']).to eql('18')
+      expect(json['data']['attributes']['lesson']).to eql(1)
+      expect(json['data']['attributes']['mark']).to eql('18')
     end
   end
 end

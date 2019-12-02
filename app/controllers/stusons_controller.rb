@@ -5,20 +5,20 @@ class StusonsController < ApplicationController
     authorize(Stuson)
     stuson = Stuson.new(stuson_params)
     if stuson.save
-      render json: { stusonsaved: true }
+      render jsonapi: stuson
     else
-      render json: { stusonsaved: false }
+      render json: stuson.errors
     end
   end
 
   def update
     authorize(Stuson)
     stuson = Stuson.find(params[:id])
-    stuson.update_attributes!(stuson_params)
+    # stuson.update_attributes!(stuson_params)
     if stuson.update(stuson_params)
-      render json: { newmark: stuson.mark }
+      render jsonapi: stuson
     else
-      render json: { newmark: 'not updated' }
+      render json: stuson.errors
     end
   end
 
