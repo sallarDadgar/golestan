@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class SessionsController < Devise::SessionsController
+  # respond_to :json
+  # include ActiveModel::Serializers::JSON
+
   def create
     resource = warden.authenticate!(scope: resource_name, recall: 'sessions#failure')
     sign_in_and_redirect(resource_name, resource)

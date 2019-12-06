@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -28,7 +30,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  context "EnumRations" do
+  context 'EnumRations' do
     it { is_expected.to respond_to :admin? }
     it { is_expected.to respond_to :prof? }
     it { is_expected.to respond_to :student? }
@@ -43,7 +45,6 @@ RSpec.describe User, type: :model do
       end
     end
   end
-
 
   context 'validations' do
     it 'should validate first name' do

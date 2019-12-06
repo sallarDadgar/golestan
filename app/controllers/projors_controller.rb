@@ -1,4 +1,5 @@
 class ProjorsController < ApplicationController
+
   def create
     projor1 = Projor.new(prjor_params)
     if projor1.save
