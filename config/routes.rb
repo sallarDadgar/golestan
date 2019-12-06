@@ -1,10 +1,10 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
+  devise_for :users, controllers: { sessions: 'sessions' }
 
-  devise_for :users, controllers: { sessions: 'sessions'}
-
-  get "(*path)", to: "application#app"
   resources :users
-    # , defaults: { format: 'json' }
+  # , defaults: { format: 'json' }
   # resources :lessons
   # resources :majors
   resources :admins
@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   resources :stusons
   resources :projors
 
+  get '(*path)', to: 'application#app'
 end
