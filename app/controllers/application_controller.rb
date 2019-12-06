@@ -1,24 +1,21 @@
 class ApplicationController < ActionController::Base
   include Pundit
   # after_action :authenticate_user!, only: :create
-  # before_action :authenticate_user!
+  before_action :authenticate_user!, except: :app
   protect_from_forgery prepend: true
   # with: :null_sessions
 
-
   def app
     if user_signed_in?
-      render 'layouts/application'
+      render template: 'layouts/app'
     else
-      render 'layouts/home.vue'
+      render template: 'layouts/auth'
     end
-    # render 'layouts/application'
   end
 
   private
 
   def authenticate_user!
-
     return super if user_signed_in?
 
     # render '@/javascript/components/home.vue'
