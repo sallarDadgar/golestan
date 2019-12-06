@@ -35,18 +35,13 @@ export default {
       }
     }
   },
-  // components: {
-  //     Header
-  // },
   methods: {
     loginSubmit() {
-      this.axios.post('/users/sign_in', this.user)
+      this.axios.post('/users/sign_in', { user: this.user })
       .then(response => {
-        console.log(response)
-        // response['data']
+        location.reload()
         }
       )
-      // redirect_to: "application#app"
     }
   }
 }
