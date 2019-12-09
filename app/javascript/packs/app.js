@@ -17,6 +17,10 @@ import App from '../panels/app.vue'
 import router from '../routers/app'
 
 
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
+
+
 Vue.use(VueAxios, axios)
 
 Vue.use(ElementUI, { lang })
