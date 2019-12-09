@@ -17,8 +17,6 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     return super if user_signed_in?
-
-    # render '@/javascript/components/home.vue'
     render json: { messages: 'you are not logged in!' }
   end
 end
