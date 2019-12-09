@@ -5,6 +5,8 @@ import teachers from "../components/teachers.vue"
 import majors from "../components/majors.vue"
 import lessons from "../components/lessons.vue"
 import interns from "../components/interns.vue"
+import AddTeacher from "../components/add-teacher.vue"
+import EditTeacher from "../components/edit-teacher.vue"
 
 Vue.use(VueRouter)
 
@@ -13,6 +15,16 @@ const routes = [
     path: "/teachers",
     name: "teachers",
     component: teachers,
+  },
+  {
+    path: "/add-teachers",
+    name: "addteachers",
+    component: AddTeacher,
+  },
+  {
+    path: "/edit-teachers",
+    name: "editteachers",
+    component: EditTeacher,
   },
   {
     path: "/majors",
