@@ -32,9 +32,6 @@
         </router-link>
       </div>
     </div>
-    <!-- <div class="maindiv" id="app2">
-      <router-view />
-    </div> -->
   </div>
 </template>
 
