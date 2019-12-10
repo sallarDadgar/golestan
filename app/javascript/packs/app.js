@@ -15,6 +15,9 @@ import 'normalize.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import App from '../panels/app.vue'
 import router from '../routers/app'
+import Vuelidate from 'vuelidate'
+
+Vue.use(Vuelidate)
 
 
 import '@fortawesome/fontawesome-free/css/all.css'
