@@ -55,7 +55,7 @@
 
     <el-form-item>
       <el-button type="primary" @click="onsubmit">Create</el-button>
-      <el-button>Cancel</el-button>
+      <el-button @click="cancel()">Cancel</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -113,21 +113,24 @@ export default {
       // }
     }
   },
-  validations: {
-    prof: {
-      college: { required },
-      experience: { required },
-      user_attributes: {
-              frst_name: { required },
-              last_name: { required },
-              email: { required },
-              code: { required },
-              password: { required },
-              password_confirmation: { required }
-            }
-    }
-  },
+  // validations: {
+  //   prof: {
+  //     college: { required },
+  //     experience: { required },
+  //     user_attributes: {
+  //             frst_name: { required },
+  //             last_name: { required },
+  //             email: { required },
+  //             code: { required },
+  //             password: { required },
+  //             password_confirmation: { required }
+  //           }
+  //   }
+  // },
   methods: {
+    cancel(){
+      this.$router.push({ name: 'teachers'})
+    },
     onsubmit() {
       this.axios.post('/profs', this.prof )
       .then((Response) => {
