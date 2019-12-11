@@ -43,13 +43,12 @@
       <el-table-column
         fixed="right"
         label="Operations"
-        width="150">
+        width="200">
         <template slot-scope="scope">
-          <router-link to="/edit-teachers">
-            <el-button>
+          <!-- <router-link :to="{name: 'editteachers', params: {professor: scope.row}}"> -->
+            <el-button @click="editprof(scope.row.id)">
               <i class="fas fa-edit" title="edit"></i>
-            </el-button>
-          </router-link> |
+            </el-button> |
           <el-button v-on:click="removeProf(scope.row.id)"
             onClick="return confirm('are you sure you want to delete this professor?');">
             <i class="fas fa-trash-alt" title="delete">
@@ -59,10 +58,12 @@
       </el-table-column>
     </el-table>
 
+
   </div>
 </template>
 <script>
 import axios from 'axios';
+
 var deserialize = require('jsonapi-deserializer').deserialize;
 export default {
   data() {
@@ -77,6 +78,9 @@ export default {
       .then((response) => {
         location.reload()
       })
+    },
+    editprof(teacherId){
+      this.$router.push({name: 'editprof', params: {profId: teacherId}})
     }
   },
   created() {
