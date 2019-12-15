@@ -35,7 +35,7 @@
             <el-button @click="showeditinput(scope.row.id, scope.row.title, scope.row.unit)">
               <i class="fas fa-edit" title="edit"></i>
             </el-button> |
-            <el-button>
+            <el-button @click="deleteField(scope.row.id)">
               <i class="fas fa-trash-alt" title="delete">
               </i>
               </el-button>
@@ -56,7 +56,13 @@
         <br/><br/><br/><br/>
         Title: {{fieldname.title}}<br/>
         Unit: {{fieldname.unit}}<br/>
-        Professor: {{profname.user.frst_name}} {{profname.user.last_name}}<br/>
+        <div v-if="profname">
+          Professor: {{profname.user.frst_name}} {{profname.user.last_name}}<br/>
+        </div>
+        <div v-else>
+          Professor: Professor was erased<br/>
+        </div>
+        <!-- Professor: {{profname.user.frst_name}} {{profname.user.last_name}}<br/> -->
         Major: {{majorname.attributes.title}}<br/>
       </div>
 
@@ -174,6 +180,14 @@ export default {
     }
   },
   methods: {
+    deleteField(id){
+      if(confirm("are you sure you want to delete this Field?")){
+        this.axios.delete('/fields/' + id)
+        .then((response) => {
+          location.reload()
+      })
+      }
+    },
     updatefield(){
       this.field.fkey_id = Number(this.selectedindexformajor)
       this.field.projor_attributes.prof = Number(this.selectedindexforprof)
@@ -222,7 +236,8 @@ export default {
       this.majorID = this.fieldname.fkey_id
       this.majorname = this.majors.find(m => m.id == this.majorID)
       this.profID = this.fieldname.projor.prof
-      this.profname = this.users.find(u => u.id == this.profID)
+      if(this.users.find(u => u.id == this.profID))
+        this.profname = this.users.find(u => u.id == this.profID)
       // console.log(this.fieldname)
     },
     switchViewMajor(event, selectedIndex){
