@@ -134,7 +134,9 @@ export default {
     onsubmit() {
       this.axios.post('/profs', this.prof )
       .then((Response) => {
-        console.log(Response)
+        if(Response.data.included[0].attributes.frst_name && Response.data.included[0].attributes.frst_name == this.prof.user_attributes.frst_name)
+          alert("professor was created!")
+          location.reload()
       })
     }
   }
