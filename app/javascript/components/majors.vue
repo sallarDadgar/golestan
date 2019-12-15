@@ -27,8 +27,7 @@
             :disabled="!conditionalBoolEdit && !helpingBool">
               <i class="fas fa-edit" title="edit"></i>
             </el-button> |
-            <el-button v-on:click="removemajor(scope.row.id)"
-            onClick="return confirm('are you sure you want to delete this professor?');">
+            <el-button v-on:click="removemajor(scope.row.id)">
               <i class="fas fa-trash-alt" title="delete">
               </i>
               </el-button>
@@ -110,11 +109,13 @@ export default {
       })
     },
     removemajor(id){
-      this.axios.delete('/reshtehs/' + id)
-      .then((response) => {
-        // console.log(response)
-        location.reload()
-      })
+      if(confirm("are you sure you want to delete this professor?")){
+        this.axios.delete('/reshtehs/' + id)
+        .then((response) => {
+          // console.log(response)
+          location.reload()
+        })
+      }
     },
     updatemajor(){
       this.axios.patch('/reshtehs/' + this.majorIDedited, { title: this.newTitle })

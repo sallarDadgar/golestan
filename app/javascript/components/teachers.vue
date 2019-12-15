@@ -49,8 +49,7 @@
             <el-button @click="editprof(scope.row.id)">
               <i class="fas fa-edit" title="edit"></i>
             </el-button> |
-          <el-button v-on:click="removeProf(scope.row.id)"
-            onClick="return confirm('are you sure you want to delete this professor?');">
+          <el-button v-on:click="removeProf(scope.row.id)">
             <i class="fas fa-trash-alt" title="delete">
             </i>
             </el-button>
@@ -74,10 +73,13 @@ export default {
   },
   methods: {
     removeProf(id) {
-      this.axios.delete('/profs/' + id)
-      .then((response) => {
-        location.reload()
-      })
+      if(confirm("are you sure you want to delete this professor?")){
+        this.axios.delete('/profs/' + id)
+        .then((response) => {
+          alert(response.data.prof_destroyed)
+          location.reload()
+        })
+      }
     },
     editprof(teacherId){
       this.$router.push({name: 'editprof', params: {profId: teacherId}})
