@@ -81,6 +81,7 @@ export default {
   },
   data(){
     return {
+      student_ID: 0,
       student_included_id: [],
       valueIds_to_be_deleted: [],
       removed_ids_to_be_deleted: [],
@@ -157,13 +158,16 @@ export default {
         )
       };
 
-      for(var i=0; i<this.student_included_id.length; i++){
-        this.axios.delete('/stusons/' + this.student_included_id[i])
+      // for(var i=0; i<this.student_included_id.length; i++){
+      //   this.axios.delete('/stusons/' + this.student_included_id[i])
+      //   .then((response) => {
+      //   })
+      // };
+
+      this.axios.delete('/stusons/' + this.student_ID)
         .then((response) => {
+          // console.log(response)
         })
-      };
-
-
 
       this.axios.patch('/students/' + this.id, {student: this.student})
       .then( response => {
@@ -204,6 +208,7 @@ export default {
       this.student.user_attributes.last_name = response.data.included[0].attributes.last_name
       this.student.user_attributes.email = response.data.included[0].attributes.email
       this.student.user_attributes.code = response.data.included[0].attributes.code
+      this.student_ID = response.data.data.id
       for(var i = 1; i < response.data.included.length; i++){
         this.student_lessons.push(response.data.included[i])
         this.student_included_id.push(response.data.included[i].id)
