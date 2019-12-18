@@ -77,7 +77,6 @@ export default {
   created() {
     this.axios.get('/profs/' + this.profId)
       .then((response) => {
-        // this.prof.id = this.profId
         this.prof.college = response.data.data.attributes.college
         this.prof.experience = response.data.data.attributes.experience
         this.prof.user_attributes.id = response.data.included[0].id
@@ -85,8 +84,6 @@ export default {
         this.prof.user_attributes.last_name = response.data.included[0].attributes.last_name
         this.prof.user_attributes.email = response.data.included[0].attributes.email
         this.prof.user_attributes.code = response.data.included[0].attributes.code
-        // this.user = deserialize(this.teacher);
-        // console.log(response.data.included[0].id)
       })
 
   },
@@ -97,6 +94,7 @@ export default {
     updateprof() {
       this.axios.patch('/profs/' + this.profId, { prof: this.prof })
       .then((response) => {
+        alert("professor's info was updated!")
         location.reload()
       })
     }
