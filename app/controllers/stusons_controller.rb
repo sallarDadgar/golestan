@@ -22,6 +22,31 @@ class StusonsController < ApplicationController
     end
   end
 
+  def destroy
+    student_id = params[:id].to_i
+    stusons_ids_delete = []
+    stusons = Stuson.all
+    stusons.each do |stuson|
+      if(stuson.fk_id == student_id)
+        stusons_ids_delete.push(stuson.id)
+      end
+    end
+    stusons_ids_delete.each do |deleteId|
+      stuson = Stuson.find(deleteId)
+      stuson.destroy
+    end
+    render json: { stuson_destroyed: 'stuson was destroyed' }
+
+
+
+    # stuson = Stuson.find(params[:id])
+    # if stuson.destroy
+    #   render json: { stuson_destroyed: 'stuson was destroyed' }
+    # else
+    #   render json: stuson.errors
+    # end
+  end
+
   private
 
   def stuson_params
