@@ -42,6 +42,18 @@ RSpec.describe "stusons controller", type: :request do
         expect(json['data']['attributes']['mark']).to eql('18')
       end
     end
+    context '.delete' do
+      it 'should delete secific stuson' do
+        admin = create(:admin, age: '33', nationality: 'iran')
+        user2 = create(:user, role: :prof, frst_name: 'qoli', last_name: 'qolizadeh',
+            email: 'qoli2@gmail.com', fkey: admin)
+        sign_in(user2)
+        student = create(:student)
+        stuson = create(:stuson, lesson: 1, fk: student)
+        delete "/stusons/#{stuson.id}"
+        expect(json["stuson_destroyed"]).to eql("stuson was destroyed")
+      end
+    end
   end
   context 'invalid params' do
     context '.create' do
