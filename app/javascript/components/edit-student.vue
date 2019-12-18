@@ -34,7 +34,7 @@
     <el-form-item label="Courses">
     <ul>
         <li v-for="field in fieldnames" v-bind:key="field">
-          {{field.course}}: {{field.mark}} <el-button @click="remove_selected_lesson(field.id, true)">
+          {{field.course}}: {{field.mark}} <el-button @click="remove_selected_lesson(field.id)">
             <i class="fas fa-trash-alt" title="delete">
             </i>
             </el-button>
@@ -42,10 +42,6 @@
 
         <li v-for="value in values" v-bind:key="value">
           {{value.title}}
-          <!-- <el-button @click="remove_selected_lesson(value.id, false)">
-          <i class="fas fa-trash-alt" title="delete">
-          </i>
-          </el-button> -->
         </li>
       </ul>
     </el-form-item>
@@ -64,7 +60,7 @@
 
 
     <el-form-item>
-      <el-button type="primary">Update</el-button>
+      <el-button type="primary" @click="updatestudent()">Update</el-button>
       <el-button @click="cancel()">Cancel</el-button>
     </el-form-item>
 
@@ -85,6 +81,11 @@ export default {
   },
   data(){
     return {
+      student_included_id: [],
+      valueIds_to_be_deleted: [],
+      removed_ids_to_be_deleted: [],
+      condiltional_helping_bool: false,
+      removed_marked_lessons: [],
       student_lessons: [],
       fieldnames: [],
       Multiselect_source: [],
@@ -107,28 +108,95 @@ export default {
       },
     }
   },
-  updated(){
-    console.log(this.values)
-  },
   methods: {
-    cancel(){
-      this.$router.push({ name: 'interns'})
-    },
-    remove_selected_lesson(hashid, conditionalBool){
-      if(conditionalBool){
-        this.fieldnames.splice(this.fieldnames.indexOf(this.fieldnames.find(
-          f => f.id == hashid
-        )), 1)
+    updatestudent(){
 
-        this.Multiselect_source.push(this.lessons.find(
-          l => l.id == hashid
-        ))
-      }
+      for(var j = 0;j<this.removed_marked_lessons.length; j++){
+        this.condiltional_helping_bool = true
+        for(var i = 0;i<this.values.length; i++){
+          if(this.removed_marked_lessons[j].id == this.values[i].id){
+            this.valueIds_to_be_deleted.push(this.values[i].id)
+            this.condiltional_helping_bool = false
+          }
+        };
+        if(this.condiltional_helping_bool){
+          this.removed_ids_to_be_deleted.push(this.removed_marked_lessons[j].id)
+        }
+      };
+
+
+      for(var i=0; i < this.valueIds_to_be_deleted.length; i++){
+        this.values.splice(this.values.indexOf(this.values.find(
+          v => v.id == this.valueIds_to_be_deleted[i]
+        )))
+      };
+
+      for(var i=0; i < this.removed_ids_to_be_deleted.length; i++){
+        this.removed_marked_lessons.splice(this.removed_marked_lessons.indexOf(
+          this.removed_marked_lessons.find(
+          v => v.id == this.removed_ids_to_be_deleted[i]
+        )))
+      };
+
+
+      for(var i=0; i<this.removed_marked_lessons.length; i++){
+        this.student.stusons_attributes.push({
+          lesson: this.removed_marked_lessons[i].id, mark: this.removed_marked_lessons[i].mark
+        })
+      };
+
+      for(var i = 0; i<this.fieldnames.length; i++ ){
+        this.student.stusons_attributes.push(
+          {lesson: this.fieldnames[i].id, mark: this.fieldnames[i].mark}
+        )
+      };
+
+      for(var i = 0; i<this.values.length; i++ ){
+        this.student.stusons_attributes.push(
+          {lesson: this.values[i].id, mark: ''}
+        )
+      };
+
+      for(var i=0; i<this.student_included_id.length; i++){
+        this.axios.delete('/stusons/' + this.student_included_id[i])
+        .then((response) => {
+        })
+      };
+
+
+
+      this.axios.patch('/students/' + this.id, {student: this.student})
+      .then( response => {
+        alert("student was updated!")
+        location.reload()
+      })
+
+    },
+    remove_selected_lesson(hashid){
+      this.removed_marked_lessons.push(this.fieldnames.find(
+        f => f.id == hashid
+      ))
+
+      this.fieldnames.splice(this.fieldnames.indexOf(this.fieldnames.find(
+        f => f.id == hashid
+      )), 1)
+      this.Multiselect_source.push(this.lessons.find(
+        l => l.id == hashid
+      ))
     }
   },
+
+
+
+
+
+  cancel(){
+      this.$router.push({ name: 'interns'})
+    },
   created(){
     this.axios.get('/students/' + this.id)
     .then(response => {
+      console.log(response)
       this.student.birthPlace = response.data.data.attributes.birthPlace
       this.student.rank = response.data.data.attributes.rank
       this.student.user_attributes.id = response.data.included[0].id
@@ -138,7 +206,9 @@ export default {
       this.student.user_attributes.code = response.data.included[0].attributes.code
       for(var i = 1; i < response.data.included.length; i++){
         this.student_lessons.push(response.data.included[i])
+        this.student_included_id.push(response.data.included[i].id)
       };
+
     })
 
     this.axios.get('/fields')
@@ -161,8 +231,6 @@ export default {
           l => l.id == this.fieldnames[i].id
         )), 1)
       };
-      console.log(this.Multiselect_source)
-      console.log(this.lessons)
     })
 
   }
