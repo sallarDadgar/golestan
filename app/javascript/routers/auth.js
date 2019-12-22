@@ -11,6 +11,10 @@ const routes = [
     name: "home",
     component: Home,
   },
+  {
+    path: '*',
+    redirect: { name: 'home' }
+  }
 ]
 
 const router = new VueRouter({
