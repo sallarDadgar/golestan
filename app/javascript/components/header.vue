@@ -30,10 +30,30 @@
             managing students
           </el-button>
         </router-link>
+        <el-button class="exit" @click="onsubmit()">
+            Exit
+          </el-button>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  methods: {
+    onsubmit(){
+      if(confirm("are you sure you want to log out?")){
+        this.axios.delete('/users/sign_out')
+        .then(Response => {
+          location.reload()
+        })
+      }
+    }
+  }
+}
+</script>
 
 <style>
   .btn {
@@ -82,5 +102,9 @@
     top: 20%;
     right: 15%;
     font-size: 15px;
+  }
+  .exit{
+    width: 100%;
+    float: bottom;
   }
 </style>
