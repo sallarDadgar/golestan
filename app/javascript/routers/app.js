@@ -6,7 +6,10 @@ import majors from "../components/majors.vue"
 import lessons from "../components/lessons.vue"
 import interns from "../components/interns.vue"
 import AddTeacher from "../components/add-teacher.vue"
-import EditTeacher from "../components/edit-teacher.vue"
+import editprof from "../components/edit-prof.vue"
+import AddStudent from "../components/add-student.vue"
+import showstudent from "../components/show-student.vue"
+import editstudent from "../components/edit-student.vue"
 
 Vue.use(VueRouter)
 
@@ -17,14 +20,32 @@ const routes = [
     component: teachers,
   },
   {
+    path: "/edit-prof/:profId",
+    name: "editprof",
+    component: editprof,
+    props: true
+  },
+  {
+    path: "/edit-student/:id",
+    name: "editstudent",
+    component: editstudent,
+    props: true
+  },
+  {
+    path: "/show-student/:id",
+    name: "showstudent",
+    component: showstudent,
+    props: true
+  },
+  {
     path: "/add-teachers",
     name: "addteachers",
     component: AddTeacher,
   },
   {
-    path: "/edit-teachers",
-    name: "editteachers",
-    component: EditTeacher,
+    path: "/add-students",
+    name: "addstudents",
+    component: AddStudent,
   },
   {
     path: "/majors",
