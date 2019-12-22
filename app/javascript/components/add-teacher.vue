@@ -2,7 +2,7 @@
   <el-form ref="teacher" :rules="rules" :model="teacher" label-width="120px">
     <h3>Add a new Professor</h3>
 
-    <el-form-item label="first name" prop="frs_tname">
+    <el-form-item label="first name" prop="frst_name">
       <el-input v-model="teacher.frst_name"></el-input>
     </el-form-item>
 
@@ -14,11 +14,7 @@
       <el-input v-model="teacher.code"></el-input>
     </el-form-item>
 
-    <el-form-item label="email" prop="email"
-    :rules="[
-      { required: true, message: 'Please input email address', trigger: 'blur' },
-      { type: 'email', message: 'Please input correct email address', trigger: ['blur', 'change'] }
-    ]">
+    <el-form-item label="email" prop="email">
       <el-input v-model="teacher.email"></el-input>
     </el-form-item>
 
@@ -55,50 +51,19 @@
 </template>
 <script>
 import axios from 'axios';
-import { required } from 'vuelidate/lib/validators'
 export default {
   data() {
-    var checkfirstname = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('Please input the first name'));
-      }
-    };
-    var checklastname = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('Please input the last name'));
-      }
-    };
-    var checkcode = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('Please input the code'));
-      }
-    };
-    var checkcollege = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('Please input the college'));
-      }
-    };
-    // var checkemail = (rule, value, callback) => {
-    //   if (!value) {
-    //     return callback(new Error('Please input the email'));
-    //   }
-    // };
-    var checkexperience = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('Please input the experience'));
-      }
-    };
-    var checkpass = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('Please input the passord'));
-      }
-    };
-    var checkpass2 = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('Please input the password agin'));
-      }
-    };
     return {
+      validators:{
+        frst_name: false,
+        last_name: false,
+        college: false,
+        experience: false,
+        email: false,
+        code: false,
+        pass1: false,
+        pass2: false
+      },
       teacher:{
         frst_name: "",
         last_name: "",
@@ -114,40 +79,41 @@ export default {
         college: "",
         experience: "",
         user_attributes: {
-                profile: "my picture",
-                frst_name: "",
-                last_name: "",
-                email: "",
-                code: "",
-                password: "",
-                password_confirmation: ""
-              }
+          profile: "my picture",
+          frst_name: "",
+          last_name: "",
+          email: "",
+          code: "",
+          password: "",
+          password_confirmation: ""
+        }
       },
       rules: {
         frst_name: [
-          {validator: checkfirstname, trigger: 'blur'}
+          { required: true, message: 'Please input first name', trigger: 'blur' }
         ],
         last_name: [
-          {validator: checklastname, trigger: 'blur'}
+          { required: true, message: 'Please input last name', trigger: 'blur' }
         ],
         code: [
-          {validator: checkcode, trigger: 'blur'}
+          { required: true, message: 'Please input code', trigger: 'blur' }
+        ],
+        email: [
+          { required: true, message: 'Please input email', trigger: 'blur' },
+          { type: 'email', message: 'Please input correct email address', trigger: ['blur', 'change'] }
         ],
         college: [
-          {validator: checkcollege, trigger: 'blur'}
+          { required: true, message: 'Please input college name', trigger: 'blur' }
         ],
-        // email: [
-        //   {validator: checkemail, trigger: 'blur'}
-        // ],
         experience: [
-          {validator: checkexperience, trigger: 'blur'}
+          { required: true, message: 'Please input the experience', trigger: 'blur' }
         ],
         password: [
-          {validator: checkpass, trigger: 'blur'}
+          { required: true, message: 'Please input password', trigger: 'blur' }
         ],
         password_confirmation: [
-          {validator: checkpass2, trigger: 'blur'}
-        ]
+          { required: true, message: 'Please input password again', trigger: 'blur' }
+        ],
       }
     }
   },
@@ -156,24 +122,30 @@ export default {
       this.$router.push({ name: 'teachers'})
     },
     onsubmit(formName) {
-      if(this.$refs[formName].Error){}
-      else{
-        this.prof.college = this.teacher.college
-        this.prof.experience = this.teacher.experience
-        this.prof.user_attributes.frst_name = this.teacher.frst_name
-        this.prof.user_attributes.last_name = this.teacher.last_name
-        this.prof.user_attributes.code = this.teacher.code
-        this.prof.user_attributes.email = this.teacher.email
-        this.prof.user_attributes.password = this.teacher.password
-        this.prof.user_attributes.password_confirmation = this.teacher.password_confirmation
+      this.$refs[formName].validate((valid) => {
+        if(valid){
+          this.prof.college = this.teacher.college
+          this.prof.experience = this.teacher.experience
+          this.prof.user_attributes.frst_name = this.teacher.frst_name
+          this.prof.user_attributes.last_name = this.teacher.last_name
+          this.prof.user_attributes.code = this.teacher.code
+          this.prof.user_attributes.email = this.teacher.email
+          this.prof.user_attributes.password = this.teacher.password
+          this.prof.user_attributes.password_confirmation = this.teacher.password_confirmation
 
-        this.axios.post('/profs', this.prof )
-        .then((Response) => {
-          if(Response.data.included[0].attributes.frst_name && Response.data.included[0].attributes.frst_name == this.prof.user_attributes.frst_name)
-            alert("professor was created!")
-            location.reload()
-        })
-      }
+          this.axios.post('/profs', this.prof )
+          .then((Response) => {
+            if(Response.data.included[0].attributes.frst_name && Response.data.included[0].attributes.frst_name == this.prof.user_attributes.frst_name){
+              alert("professor was created!")
+              location.reload()
+            }
+          })
+        }
+        else{
+          console.log("its not valid")
+          alert("please fill in the Fields")
+        }
+      })
     }
   }
 }
