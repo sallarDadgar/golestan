@@ -7,7 +7,13 @@ class ApplicationController < ActionController::Base
 
   def app
     if user_signed_in?
-      render template: 'layouts/app'
+      if current_user.role == 'admin'
+        render template: 'layouts/app'
+      elsif current_user.role == 'prof'
+        render template: 'layouts/professor'
+      elsif current_user.role == 'student'
+        render template: 'layouts/student'
+      end
     else
       render template: 'layouts/auth'
     end
