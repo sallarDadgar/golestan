@@ -27,15 +27,6 @@ RSpec.describe 'Students Controller', type: :request do
         expect(json['included'][1]['attributes']['lesson']).to eql(1)
 
 
-
-
-        # expect(json['data'].size).to eql(1)
-        # expect(json['data'][0]['id'].to_i).to eql(student.id)
-        # expect(json['data'][0]['attributes']['birthPlace']).to eql('Iran')
-        # expect(json['data'][0]['attributes']['rank']).to eql('1000200')
-        # expect(json['data'][0]['attributes']['user']['frst_name']).to eql('qoli')
-        # expect(json['data'][0]['attributes']['user']['last_name']).to eql('qolizadeh')
-        # expect(json['data'][0]['attributes']['user']['email']).to eql('qoli@gmail.com')
       end
     end
 
