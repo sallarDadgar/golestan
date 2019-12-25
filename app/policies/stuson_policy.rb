@@ -1,8 +1,17 @@
 class StusonPolicy < ApplicationPolicy
   attr_reader :user, :record
+  def index?
+    user.student? or user.prof?
+  end
+
+  def show?
+    user.prof?
+  end
+
   def create?
     user.student? or user.admin?
   end
+
   def update?
     user.prof?
   end
