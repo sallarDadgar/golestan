@@ -5,8 +5,8 @@
         <p font-size="20px"> acom golestan </p>
         <img src= "../../assets/images/play1.jpeg" class="userpic" />
         <p class="info">
-          Name:<br/>
-          Code:
+          Name:<br/>{{getting_user.frst_name}} {{getting_user.last_name}}<br/>
+          Code:<br/>{{getting_user.code}}
         </p>
       </div>
       <div class="btns">
@@ -31,17 +31,23 @@
           </el-button>
         </router-link>
         <el-button class="exit" @click="onsubmit()">
-            Exit
-          </el-button>
+          Exit
+        </el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import store from '../store/index'
 
 export default {
+  computed: {
+    getting_user() {
+      return store.getters.get_user
+    }
+  },
+  // created() {this.user_code = this.$store.getters.get_user.data.code},
   methods: {
     onsubmit(){
       if(confirm("are you sure you want to log out?")){
@@ -97,10 +103,9 @@ export default {
 
   .info {
     position: fixed;
-    float: left;
+    float: right;
     height: 10%;
     top: 20%;
-    right: 15%;
     font-size: 15px;
   }
   .exit{
