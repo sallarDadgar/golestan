@@ -10,10 +10,16 @@ import editprof from "../components/edit-prof.vue"
 import AddStudent from "../components/add-student.vue"
 import showstudent from "../components/show-student.vue"
 import editstudent from "../components/edit-student.vue"
+import welcome from "../components/welcome.vue"
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: "/",
+    name: "welcome",
+    component: welcome
+  },
   {
     path: "/teachers",
     name: "teachers",
