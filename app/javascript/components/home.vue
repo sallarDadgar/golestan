@@ -1,7 +1,7 @@
 <template>
 <div>
   <el-form ref="form" label-width="140px">
-    <el-form-item label="COM_email">
+    <el-form-item label="email">
       <el-input v-model="user.email"
         placeholder="Enter email">
       </el-input>
@@ -21,9 +21,11 @@
     </el-form-item>
   </el-form>
 </div>
-
 </template>
+
 <script>
+import store from '../store/index'
+
 export default {
   name: 'Login',
   data(){
@@ -38,6 +40,7 @@ export default {
     loginSubmit() {
       this.axios.post('/users/sign_in', { user: this.user })
       .then(response => {
+        store.dispatch('addUser', response.data.data)
         location.reload()
         }
       )
