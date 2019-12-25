@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 class StusonsController < ApplicationController
+  def index
+    authorize(Stuson)
+    stusons= Stuson.all
+    render jsonapi: stusons
+  end
+
+  def show
+    authorize(Stuson)
+    render jsonapi: Stuson.find(params[:id])
+  end
+
   def create
     authorize(Stuson)
     stuson = Stuson.new(stuson_params)
