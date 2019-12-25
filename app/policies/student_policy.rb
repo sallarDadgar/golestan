@@ -23,7 +23,7 @@ class StudentPolicy < ApplicationPolicy
   end
 
   def show?
-    user.admin?
+    user.admin? or user.prof?
   end
 
   def update?
