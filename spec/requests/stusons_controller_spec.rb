@@ -1,12 +1,27 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "stusons controller", type: :request do
+RSpec.describe 'stusons controller', type: :request do
   context 'valid params' do
+    context '.index' do
+      it 'should retun success response' do
+        teacher = create(:prof)
+        user = create(:user, role: :student, frst_name: 'qoli', last_name: 'qolizadeh',
+                             email: 'qoli@gmail.com', fkey: teacher)
+        sign_in(user)
+
+        student = create(:student)
+        create(:stuson, lesson: 1, mark: '18', fk_id: student.id, fk_type: 'Student')
+        get '/stusons'
+        # binding.pry
+        expect(json['data'][0]['attributes']['mark']).to eql('18')
+        expect(json['data'][0]['attributes']['lesson']).to eql(1)
+      end
+    end
     context '.create' do
       it 'should add stuson' do
         admin = create(:admin, age: '33', nationality: 'iran')
         user2 = create(:user, role: :admin, frst_name: 'qoli', last_name: 'qolizadeh',
-            email: 'qoli2@gmail.com', fkey: admin)
+                              email: 'qoli2@gmail.com', fkey: admin)
         sign_in(user2)
         student = create(:student)
         post '/stusons', params: {
@@ -28,7 +43,7 @@ RSpec.describe "stusons controller", type: :request do
       it 'should update specified user' do
         admin = create(:admin, age: '33', nationality: 'iran')
         user2 = create(:user, role: :prof, frst_name: 'qoli', last_name: 'qolizadeh',
-            email: 'qoli2@gmail.com', fkey: admin)
+                              email: 'qoli2@gmail.com', fkey: admin)
         sign_in(user2)
         student = create(:student)
         stuson = create(:stuson, lesson: 1, fk: student)
@@ -46,12 +61,12 @@ RSpec.describe "stusons controller", type: :request do
       it 'should delete secific stuson' do
         admin = create(:admin, age: '33', nationality: 'iran')
         user2 = create(:user, role: :prof, frst_name: 'qoli', last_name: 'qolizadeh',
-            email: 'qoli2@gmail.com', fkey: admin)
+          email: 'qoli2@gmail.com', fkey: admin)
         sign_in(user2)
         student = create(:student)
         stuson = create(:stuson, lesson: 1, fk: student)
         delete "/stusons/#{stuson.id}"
-        expect(json["stuson_destroyed"]).to eql("stuson was destroyed")
+        expect(json['stuson_destroyed']).to eql('stuson was destroyed')
       end
     end
   end
@@ -60,9 +75,9 @@ RSpec.describe "stusons controller", type: :request do
       it 'should not add stuson when no valid attributes provided' do
         admin = create(:admin, age: '33', nationality: 'iran')
         user2 = create(:user, role: :admin, frst_name: 'qoli', last_name: 'qolizadeh',
-            email: 'qoli2@gmail.com', fkey: admin)
+                              email: 'qoli2@gmail.com', fkey: admin)
         sign_in(user2)
-        student = create(:student)
+
         post '/stusons', params: {
           stuson: {
             mark: '',
@@ -72,14 +87,14 @@ RSpec.describe "stusons controller", type: :request do
           }
         }
         expect(json['lesson']).to eql(["can't be blank"])
-        expect(json['fk']).to eql(["must exist"])
+        expect(json['fk']).to eql(['must exist'])
       end
     end
     context '.update' do
       it 'should not update when invalid attributes provided' do
         admin = create(:admin, age: '33', nationality: 'iran')
         user2 = create(:user, role: :prof, frst_name: 'qoli', last_name: 'qolizadeh',
-            email: 'qoli2@gmail.com', fkey: admin)
+                              email: 'qoli2@gmail.com', fkey: admin)
         sign_in(user2)
         student = create(:student)
         stuson = create(:stuson, lesson: 1, fk: student)
@@ -93,7 +108,7 @@ RSpec.describe "stusons controller", type: :request do
           }
         }
         expect(json['lesson']).to eql(["can't be blank"])
-        expect(json['fk']).to eql(["must exist"])
+        expect(json['fk']).to eql(['must exist'])
       end
     end
   end
