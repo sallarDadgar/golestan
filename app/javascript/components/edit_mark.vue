@@ -39,47 +39,6 @@
         <el-button type="primary" @click="save()">save</el-button>
 
       </el-form>
-
-      <!-- <el-table
-      :data="shownDate"
-      style="width: 80%"
-      height="250">
-        <el-table-column
-          prop="title"
-          label=""
-          width="150">
-        </el-table-column>
-
-        <el-table-column
-          prop="data"
-          label=""
-          width="150">
-        </el-table-column>
-      </el-table>
-       <button type="button">Click Me!</button><br/>
-       ---------------------------------------------
-
-
-
-      <table>
-        <tr>
-          <td>First Name</td>
-          <td>{{this.student.user.frst_name}}</td>
-        </tr>
-        <tr>
-          <td>Last Name</td>
-          <td>{{this.student.user.last_name}}</td>
-        </tr>
-        <tr>
-          <td>ID</td>
-          <td>{{this.student.user.code}}</td>
-        </tr>
-        <tr>
-          <td>Mark</td>
-          <td><input type="text" name="MarkTextBox" v-model="theMark" /></td>
-        </tr>
-      </table>
-       <button type="button" @click="save()">save</button> -->
     </div>
 
     <div class="rightside">
@@ -158,8 +117,5 @@ export default {
   float: left;
   width: 30%;
   height: 100%;
-}
-td{
-  padding: 15px;
 }
 </style>
