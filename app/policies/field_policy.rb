@@ -2,7 +2,7 @@ class FieldPolicy < ApplicationPolicy
   attr_reader :user, :record
 
   def index?
-    user.admin? or user.prof?
+    user.admin? or user.prof? or user.student?
   end
 
   def create?
