@@ -2,7 +2,7 @@ class ProfPolicy < ApplicationPolicy
   attr_reader :user, :record
 
   def index?
-    user.admin?
+    user.admin? or user.student?
   end
 
   def create?
