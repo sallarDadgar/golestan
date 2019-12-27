@@ -1,34 +1,34 @@
 <template>
-<el-form ref="form"  label-width="120px">
+<el-form ref="apprentice" :rules="rules" :model="apprentice" label-width="120px">
 
     <h3>Edit student</h3>
 
-    <el-form-item label="first name" prop="firstname">
-      <el-input v-model="student.user_attributes.frst_name">
+    <el-form-item label="first name" prop="frst_name">
+      <el-input v-model="apprentice.frst_name">
       </el-input>
     </el-form-item>
 
-    <el-form-item label="last name" prop="lastname">
-      <el-input v-model="student.user_attributes.last_name">
+    <el-form-item label="last name" prop="last_name">
+      <el-input v-model="apprentice.last_name">
       </el-input>
     </el-form-item>
 
     <el-form-item label="ID" prop="code">
-      <el-input v-model="student.user_attributes.code">
+      <el-input v-model="apprentice.code">
       </el-input>
     </el-form-item>
 
     <el-form-item label="email" prop="email">
-      <el-input v-model="student.user_attributes.email">
+      <el-input v-model="apprentice.email">
       </el-input>
     </el-form-item>
 
-     <el-form-item label="birthPlace" prop="experience">
-      <el-input v-model="student.birthPlace"></el-input>
+     <el-form-item label="birthPlace" prop="birthPlace">
+      <el-input v-model="apprentice.birthPlace"></el-input>
     </el-form-item>
 
-    <el-form-item label="rank">
-      <el-input v-model="student.rank"></el-input>
+    <el-form-item label="rank" prop="rank">
+      <el-input v-model="apprentice.rank"></el-input>
     </el-form-item>
 
     <el-form-item label="Courses">
@@ -60,7 +60,7 @@
 
 
     <el-form-item>
-      <el-button type="primary" @click="updatestudent()">Update</el-button>
+      <el-button type="primary" @click="updatestudent('apprentice')">Update</el-button>
       <el-button @click="cancel()">Cancel</el-button>
     </el-form-item>
 
@@ -81,6 +81,33 @@ export default {
   },
   data(){
     return {
+      rules: {
+        frst_name: [
+          { required: true, message: 'Please input first name', trigger: 'blur' }
+        ],
+        last_name: [
+          { required: true, message: 'Please input last name', trigger: 'blur' }
+        ],
+        code: [
+          { required: true, message: 'Please input code', trigger: 'blur' }
+        ],
+        email: [
+          { required: true, message: 'Please input email', trigger: 'blur' },
+          { type: 'email', message: 'Please input correct email address', trigger: ['blur', 'change'] }
+        ],
+        birthPlace: [
+          { required: true, message: 'Please input birth place', trigger: 'blur' }
+        ],
+        rank: [
+          { required: true, message: 'Please input the rank', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: 'Please input password', trigger: 'blur' }
+        ],
+        password_confirmation: [
+          { required: true, message: 'Please input password again', trigger: 'blur' }
+        ],
+      },
       student_ID: 0,
       student_included_id: [],
       valueIds_to_be_deleted: [],
@@ -94,6 +121,18 @@ export default {
       fileds: [],
       fileds_taken: [],
       lessons: [],
+
+      apprentice: {
+        birthPlace: "",
+        rank: "",
+        userId: 0,
+        profile: "my picture",
+        frst_name: "",
+        last_name: "",
+        email: "",
+        code: "",
+      },
+
       student: {
         birthPlace: "",
         rank: "",
@@ -105,82 +144,98 @@ export default {
           email: "",
           code: "",
         },
+
         stusons_attributes:[]
       },
     }
   },
   methods: {
-    updatestudent(){
+    updatestudent(formName){
+       this.$refs[formName].validate((valid) => {
+        if(valid){
+          this.student.birthPlace = this.apprentice.birthPlace
+          this.student.rank = this.apprentice.rank
+          this.student.user_attributes.id = this.apprentice.userId
+          this.student.user_attributes.frst_name = this.apprentice.frst_name
+          this.student.user_attributes.last_name = this.apprentice.last_name
+          this.student.user_attributes.email = this.apprentice.email
+          this.student.user_attributes.code = this.apprentice.code
 
-      for(var j = 0;j<this.removed_marked_lessons.length; j++){
-        this.condiltional_helping_bool = true
-        for(var i = 0;i<this.values.length; i++){
-          if(this.removed_marked_lessons[j].id == this.values[i].id){
-            this.valueIds_to_be_deleted.push(this.values[i].id)
-            this.condiltional_helping_bool = false
-          }
-        };
-        if(this.condiltional_helping_bool){
-          this.removed_ids_to_be_deleted.push(this.removed_marked_lessons[j].id)
+          for(var j = 0;j<this.removed_marked_lessons.length; j++){
+            this.condiltional_helping_bool = true
+            for(var i = 0;i<this.values.length; i++){
+              if(this.removed_marked_lessons[j].id == this.values[i].id){
+                this.valueIds_to_be_deleted.push(this.values[i].id)
+                this.condiltional_helping_bool = false
+              }
+            };
+            if(this.condiltional_helping_bool){
+              this.removed_ids_to_be_deleted.push(this.removed_marked_lessons[j].id)
+            }
+          };
+
+
+          for(var i=0; i < this.valueIds_to_be_deleted.length; i++){
+            this.values.splice(this.values.indexOf(this.values.find(
+              v => v.id == this.valueIds_to_be_deleted[i]
+            )))
+          };
+
+          for(var i=0; i < this.removed_ids_to_be_deleted.length; i++){
+            this.removed_marked_lessons.splice(this.removed_marked_lessons.indexOf(
+              this.removed_marked_lessons.find(
+              v => v.id == this.removed_ids_to_be_deleted[i]
+            )))
+          };
+
+
+          for(var i=0; i<this.removed_marked_lessons.length; i++){
+            this.student.stusons_attributes.push({
+              lesson: this.removed_marked_lessons[i].id, mark: this.removed_marked_lessons[i].mark
+            })
+          };
+
+          for(var i = 0; i<this.fieldnames.length; i++ ){
+            this.student.stusons_attributes.push(
+              {lesson: this.fieldnames[i].id, mark: this.fieldnames[i].mark}
+            )
+          };
+
+          for(var i = 0; i<this.values.length; i++ ){
+            this.student.stusons_attributes.push(
+              {lesson: this.values[i].id, mark: ''}
+            )
+          };
+
+
+
+    /////////////////////////////////////////////////////////////////////////////
+          // for(var i=0; i<this.student_included_id.length; i++){
+          //   this.axios.delete('/stusons/' + this.student_included_id[i])
+          //   .then((response) => {
+          //   })
+          // };
+
+          this.axios.delete('/stusons/' + this.student_ID)
+            .then((response) => {
+            })
+    /////////////////////////////////////////////////////////////////////////////
+
+
+
+          this.axios.patch('/students/' + this.id, {student: this.student})
+          .then( response => {
+            alert("student was updated!")
+            location.reload()
+          })
         }
-      };
-
-
-      for(var i=0; i < this.valueIds_to_be_deleted.length; i++){
-        this.values.splice(this.values.indexOf(this.values.find(
-          v => v.id == this.valueIds_to_be_deleted[i]
-        )))
-      };
-
-      for(var i=0; i < this.removed_ids_to_be_deleted.length; i++){
-        this.removed_marked_lessons.splice(this.removed_marked_lessons.indexOf(
-          this.removed_marked_lessons.find(
-          v => v.id == this.removed_ids_to_be_deleted[i]
-        )))
-      };
-
-
-      for(var i=0; i<this.removed_marked_lessons.length; i++){
-        this.student.stusons_attributes.push({
-          lesson: this.removed_marked_lessons[i].id, mark: this.removed_marked_lessons[i].mark
-        })
-      };
-
-      for(var i = 0; i<this.fieldnames.length; i++ ){
-        this.student.stusons_attributes.push(
-          {lesson: this.fieldnames[i].id, mark: this.fieldnames[i].mark}
-        )
-      };
-
-      for(var i = 0; i<this.values.length; i++ ){
-        this.student.stusons_attributes.push(
-          {lesson: this.values[i].id, mark: ''}
-        )
-      };
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-      // for(var i=0; i<this.student_included_id.length; i++){
-      //   this.axios.delete('/stusons/' + this.student_included_id[i])
-      //   .then((response) => {
-      //   })
-      // };
-
-      this.axios.delete('/stusons/' + this.student_ID)
-        .then((response) => {
-        })
-/////////////////////////////////////////////////////////////////////////////
-
-
-
-      this.axios.patch('/students/' + this.id, {student: this.student})
-      .then( response => {
-        alert("student was updated!")
-        location.reload()
-      })
-
+        else{
+          alert("please fill in the Fields")
+        }
+       })
     },
+
+
     remove_selected_lesson(hashid){
       this.removed_marked_lessons.push(this.fieldnames.find(
         f => f.id == hashid
@@ -205,14 +260,13 @@ export default {
   created(){
     this.axios.get('/students/' + this.id)
     .then(response => {
-      // console.log(response)
-      this.student.birthPlace = response.data.data.attributes.birthPlace
-      this.student.rank = response.data.data.attributes.rank
-      this.student.user_attributes.id = response.data.included[0].id
-      this.student.user_attributes.frst_name = response.data.included[0].attributes.frst_name
-      this.student.user_attributes.last_name = response.data.included[0].attributes.last_name
-      this.student.user_attributes.email = response.data.included[0].attributes.email
-      this.student.user_attributes.code = response.data.included[0].attributes.code
+      this.apprentice.birthPlace = response.data.data.attributes.birthPlace
+      this.apprentice.rank = response.data.data.attributes.rank
+      this.apprentice.userId = response.data.included[0].id
+      this.apprentice.frst_name = response.data.included[0].attributes.frst_name
+      this.apprentice.last_name = response.data.included[0].attributes.last_name
+      this.apprentice.email = response.data.included[0].attributes.email
+      this.apprentice.code = response.data.included[0].attributes.code
       this.student_ID = response.data.data.id
       for(var i = 1; i < response.data.included.length; i++){
         this.student_lessons.push(response.data.included[i])
