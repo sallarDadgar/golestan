@@ -54,16 +54,6 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      validators:{
-        frst_name: false,
-        last_name: false,
-        college: false,
-        experience: false,
-        email: false,
-        code: false,
-        pass1: false,
-        pass2: false
-      },
       teacher:{
         frst_name: "",
         last_name: "",
