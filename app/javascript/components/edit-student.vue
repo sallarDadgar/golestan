@@ -158,6 +158,9 @@ export default {
         )
       };
 
+
+
+/////////////////////////////////////////////////////////////////////////////
       // for(var i=0; i<this.student_included_id.length; i++){
       //   this.axios.delete('/stusons/' + this.student_included_id[i])
       //   .then((response) => {
@@ -166,8 +169,10 @@ export default {
 
       this.axios.delete('/stusons/' + this.student_ID)
         .then((response) => {
-          // console.log(response)
         })
+/////////////////////////////////////////////////////////////////////////////
+
+
 
       this.axios.patch('/students/' + this.id, {student: this.student})
       .then( response => {
@@ -200,7 +205,7 @@ export default {
   created(){
     this.axios.get('/students/' + this.id)
     .then(response => {
-      console.log(response)
+      // console.log(response)
       this.student.birthPlace = response.data.data.attributes.birthPlace
       this.student.rank = response.data.data.attributes.rank
       this.student.user_attributes.id = response.data.included[0].id
