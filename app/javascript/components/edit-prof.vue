@@ -100,12 +100,13 @@ export default {
         experience: [
           { required: true, message: 'Please input the experience', trigger: 'blur' }
         ],
-        password: [
-          { required: true, message: 'Please input password', trigger: 'blur' }
-        ],
-        password_confirmation: [
-          { required: true, message: 'Please input password again', trigger: 'blur' }
-        ],
+        // password: [
+        //   { required: true, message: 'Please input password', trigger: 'blur' },
+        //   { min: 6, message: 'Length should at laest 6 chaaracters', trigger: 'blur' }
+        // ],
+        // password_confirmation: [
+        //   { required: true, message: 'Please input password again', trigger: 'blur' }
+        // ],
       }
     }
   },
