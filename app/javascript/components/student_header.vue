@@ -3,12 +3,14 @@
     <div class= 'rightbar'>
       <div class="userinfo">
         <p font-size="20px"> acom golestan </p>
+        <hr />
         <img src= "../../assets/images/play1.jpeg" class="userpic" />
         <p class="info">
           Name:<br/>{{getting_user.frst_name}} {{getting_user.last_name}}<br/>
           Code:<br/>{{getting_user.code}}
         </p>
       </div>
+      <hr />
       <div class="btns">
         <el-button class="exit" @click="logOut()">
             Exit
@@ -86,5 +88,7 @@ export default {
   .exit{
     width: 100%;
     float: bottom;
+
+    background-color: orange;
   }
 </style>
