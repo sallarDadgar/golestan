@@ -115,5 +115,6 @@ export default {
   .exit{
     width: 100%;
     float: bottom;
+    background-color: orange;
   }
 </style>
