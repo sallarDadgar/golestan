@@ -3,12 +3,14 @@
   <div class= 'rightbar'>
       <div class="userinfo">
         <p font-size="20px"> acom golestan </p>
+        <hr/>
         <img src= "../../assets/images/play1.jpeg" class="userpic" />
         <p class="info">
           Name:<br/>{{getting_user.frst_name}} {{getting_user.last_name}}<br/>
           Code:<br/>{{getting_user.code}}
         </p>
       </div>
+      <hr/>
       <div class="btns">
         <div v-for="item in teachers_lessons" v-bind:key="item">
           <el-button class="btn" @click="ShowTeachersStudents(item.id)">
@@ -77,6 +79,7 @@ export default {
   .btn {
     width: 100%;
     right: 0;
+    background-color: yellow
   }
   .btns {
     width: 100%;
@@ -96,6 +99,7 @@ export default {
     right: 0;
     width: 20%;
     height: 100%;
+    background-color: whitesmoke;
   }
 
   .userinfo {
@@ -123,5 +127,6 @@ export default {
   .exit{
     width: 100%;
     float: bottom;
+    background-color: orange;
   }
 </style>
