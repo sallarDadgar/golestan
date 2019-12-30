@@ -61,6 +61,7 @@ export default {
     right: 0;
     width: 20%;
     height: 100%;
+    background-color: whitesmoke;
   }
 
   .userinfo {
